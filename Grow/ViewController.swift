@@ -9,17 +9,42 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var mainView: MainView
+    var myGame: ConwayGame
+    
+    required init(coder aDecoder: NSCoder) {
+        self.myGame = ConwayGame(rows: 50, cols: 25)
+        self.myGame.populateBoard(60)
+        
+        self.mainView = MainView(coder: aDecoder)
+        
+        super.init(coder: aDecoder)
+    }
                             
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.setUpBoardView()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-
-
+    
+    override func viewDidLayoutSubviews() {
+        self.mainView.configureView()
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    func setUpBoardView() {
+        self.mainView.gameBoard = myGame
+        self.mainView.gameBoard.delegate = self.mainView
+        
+        self.view = self.mainView
+    }
 }
 

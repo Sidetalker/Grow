@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5110A2A719A7951700CDF0F8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5110A2A619A7951700CDF0F8 /* MainView.swift */; };
 		51ACE90E19A39BE7009422C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ACE90D19A39BE7009422C0 /* AppDelegate.swift */; };
 		51ACE91119A39BE7009422C0 /* Grow.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 51ACE90F19A39BE7009422C0 /* Grow.xcdatamodeld */; };
 		51ACE91319A39BE7009422C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ACE91219A39BE7009422C0 /* ViewController.swift */; };
 		51ACE91619A39BE7009422C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51ACE91419A39BE7009422C0 /* Main.storyboard */; };
 		51ACE91819A39BE7009422C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51ACE91719A39BE7009422C0 /* Images.xcassets */; };
 		51ACE92419A39BE7009422C0 /* GrowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ACE92319A39BE7009422C0 /* GrowTests.swift */; };
+		51FD93A719AB93D300B2A00C /* ConwayGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FD93A619AB93D300B2A00C /* ConwayGame.swift */; };
+		51FD93AB19AB9DEB00B2A00C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51FD93AA19AB9DEB00B2A00C /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5110A2A619A7951700CDF0F8 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		51ACE90819A39BE7009422C0 /* Grow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51ACE90C19A39BE7009422C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51ACE90D19A39BE7009422C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +40,9 @@
 		51ACE91D19A39BE7009422C0 /* GrowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		51ACE92219A39BE7009422C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51ACE92319A39BE7009422C0 /* GrowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowTests.swift; sourceTree = "<group>"; };
+		51ACE92D19A3A865009422C0 /* Grow.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Grow.playground; sourceTree = "<group>"; };
+		51FD93A619AB93D300B2A00C /* ConwayGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConwayGame.swift; sourceTree = "<group>"; };
+		51FD93AA19AB9DEB00B2A00C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51FD93AB19AB9DEB00B2A00C /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +67,7 @@
 		51ACE8FF19A39BE7009422C0 = {
 			isa = PBXGroup;
 			children = (
+				51FD93AA19AB9DEB00B2A00C /* CoreData.framework */,
 				51ACE90A19A39BE7009422C0 /* Grow */,
 				51ACE92019A39BE7009422C0 /* GrowTests */,
 				51ACE90919A39BE7009422C0 /* Products */,
@@ -79,6 +88,9 @@
 			children = (
 				51ACE90D19A39BE7009422C0 /* AppDelegate.swift */,
 				51ACE91219A39BE7009422C0 /* ViewController.swift */,
+				5110A2A619A7951700CDF0F8 /* MainView.swift */,
+				51FD93A619AB93D300B2A00C /* ConwayGame.swift */,
+				51ACE92D19A3A865009422C0 /* Grow.playground */,
 				51ACE91419A39BE7009422C0 /* Main.storyboard */,
 				51ACE91719A39BE7009422C0 /* Images.xcassets */,
 				51ACE90F19A39BE7009422C0 /* Grow.xcdatamodeld */,
@@ -212,7 +224,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				51ACE91319A39BE7009422C0 /* ViewController.swift in Sources */,
+				5110A2A719A7951700CDF0F8 /* MainView.swift in Sources */,
 				51ACE91119A39BE7009422C0 /* Grow.xcdatamodeld in Sources */,
+				51FD93A719AB93D300B2A00C /* ConwayGame.swift in Sources */,
 				51ACE90E19A39BE7009422C0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,6 +348,7 @@
 				INFOPLIST_FILE = Grow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -345,6 +360,7 @@
 				INFOPLIST_FILE = Grow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -401,6 +417,7 @@
 				51ACE92919A39BE7009422C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		51ACE92A19A39BE7009422C0 /* Build configuration list for PBXNativeTarget "GrowTests" */ = {
 			isa = XCConfigurationList;
@@ -409,6 +426,7 @@
 				51ACE92C19A39BE7009422C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
