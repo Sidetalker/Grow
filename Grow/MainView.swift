@@ -51,9 +51,9 @@ class MainView: UIView, ConwayGameDelegate {
     func tapped(recognizer: UILongPressGestureRecognizer) {
         var tapLocation = recognizer.locationInView(self)
         
-        toggleIndexAtPoint(tapLocation)
-        
         NSLog("Tap Gesture Popped (\(tapLocation.x), \(tapLocation.y))")
+        
+        toggleIndexAtPoint(tapLocation)
     }
     
     func toggleIndexAtPoint(tapLocation: CGPoint) {
@@ -62,6 +62,10 @@ class MainView: UIView, ConwayGameDelegate {
         
         var xIndex = Int(tapLocation.x / width)
         var yIndex = Int(tapLocation.y / height)
+        
+        if xIndex >= gameBoard.cols || yIndex >= gameBoard.rows {
+            return
+        }
         
         if xIndex == lastX && yIndex == lastY {
             return
@@ -109,7 +113,7 @@ class MainView: UIView, ConwayGameDelegate {
     }
     
     func drawGrid(rect: CGRect) {
-//        NSLog("drawGrid started")
+        NSLog("drawGrid started")
         
         let ctx = UIGraphicsGetCurrentContext()
         CGContextSetLineWidth(ctx, 0.5)
@@ -147,7 +151,7 @@ class MainView: UIView, ConwayGameDelegate {
             }
         }
         
-//        NSLog("drawGrid ended")
+        NSLog("drawGrid ended")
     }
     
     func gameDidStart(game: ConwayGame) {

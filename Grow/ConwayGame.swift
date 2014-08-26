@@ -80,19 +80,19 @@ class ConwayGame {
                     board[x + xLoc][y + yLoc].neighbors++
                 }
                 
-//                if startingState {
-//                    if board[x + xLoc][y + yLoc].neighbors < 2 || board[x + xLoc][y + yLoc].neighbors > 3 {
-//                        board[x + xLoc][y + yLoc].changed = !board[x + xLoc][y + yLoc].changed
-//                    }
-//                }
-//                else {
-//                    if board[x + xLoc][y + yLoc].neighbors == 3
-//                    {
-//                        board[x + xLoc][y + yLoc].changed = !board[x + xLoc][y + yLoc].changed
-//                    }
-//                }
+                if startingState {
+                    if board[x + xLoc][y + yLoc].neighbors < 2 || board[x + xLoc][y + yLoc].neighbors > 3 {
+                        board[x + xLoc][y + yLoc].changed = true
+                    }
+                }
+                else {
+                    if board[x + xLoc][y + yLoc].neighbors == 3
+                    {
+                        board[x + xLoc][y + yLoc].changed = true
+                    }
+                }
                 
-                board[x + xLoc][y + yLoc].changed = true
+//                board[x + xLoc][y + yLoc].changed = true
             }
         }
     }

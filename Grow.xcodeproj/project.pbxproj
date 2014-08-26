@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5110A2A719A7951700CDF0F8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5110A2A619A7951700CDF0F8 /* MainView.swift */; };
+		515F91AA19ACE4FF005151E2 /* BufferGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515F91A919ACE4FF005151E2 /* BufferGame.swift */; };
 		51ACE90E19A39BE7009422C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ACE90D19A39BE7009422C0 /* AppDelegate.swift */; };
 		51ACE91119A39BE7009422C0 /* Grow.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 51ACE90F19A39BE7009422C0 /* Grow.xcdatamodeld */; };
 		51ACE91319A39BE7009422C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ACE91219A39BE7009422C0 /* ViewController.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		5110A2A619A7951700CDF0F8 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		515F91A919ACE4FF005151E2 /* BufferGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BufferGame.swift; sourceTree = "<group>"; };
 		51ACE90819A39BE7009422C0 /* Grow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51ACE90C19A39BE7009422C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51ACE90D19A39BE7009422C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			children = (
 				51ACE90D19A39BE7009422C0 /* AppDelegate.swift */,
 				51ACE91219A39BE7009422C0 /* ViewController.swift */,
+				515F91A919ACE4FF005151E2 /* BufferGame.swift */,
 				5110A2A619A7951700CDF0F8 /* MainView.swift */,
 				51FD93A619AB93D300B2A00C /* ConwayGame.swift */,
 				51ACE92D19A3A865009422C0 /* Grow.playground */,
@@ -228,6 +231,7 @@
 				51ACE91119A39BE7009422C0 /* Grow.xcdatamodeld in Sources */,
 				51FD93A719AB93D300B2A00C /* ConwayGame.swift in Sources */,
 				51ACE90E19A39BE7009422C0 /* AppDelegate.swift in Sources */,
+				515F91AA19ACE4FF005151E2 /* BufferGame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

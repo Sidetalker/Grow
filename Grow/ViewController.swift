@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     var myGame: ConwayGame
     
     required init(coder aDecoder: NSCoder) {
-        self.myGame = ConwayGame(rows: 50, cols: 25)
+        self.myGame = ConwayGame(rows: 100, cols: 50)
         self.myGame.populateBoard(60)
         
         self.mainView = MainView(coder: aDecoder)
