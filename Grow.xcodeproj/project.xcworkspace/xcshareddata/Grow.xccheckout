@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FE80E8D0-7D85-4B01-84FB-4AF53713EDB4</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Grow</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>584E8422F4936A68B4E74F04FC70000AAB9CFAAA</key>
+		<string>https://github.com/Sidetalker/Grow.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Grow.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>584E8422F4936A68B4E74F04FC70000AAB9CFAAA</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Sidetalker/Grow.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>584E8422F4936A68B4E74F04FC70000AAB9CFAAA</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>584E8422F4936A68B4E74F04FC70000AAB9CFAAA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Grow</string>
+		</dict>
+	</array>
+</dict>
+</plist>

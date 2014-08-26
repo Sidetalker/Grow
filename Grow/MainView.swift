@@ -25,6 +25,8 @@ class MainView: UIView, ConwayGameDelegate {
     
     func configureView() {
         self.backgroundColor = UIColor.whiteColor()
+        self.clearsContextBeforeDrawing = false
+        self.opaque = true
         
         let tapGesture = UILongPressGestureRecognizer(target: self, action: "tapped:")
         tapGesture.numberOfTapsRequired = 0
@@ -72,7 +74,7 @@ class MainView: UIView, ConwayGameDelegate {
         lastX = xIndex
         lastY = yIndex
         
-        gameBoard.board[yIndex][xIndex] = !gameBoard.board[yIndex][xIndex]
+        gameBoard.board[yIndex][xIndex].state = !gameBoard.board[yIndex][xIndex].state
         
         self.setNeedsDisplay()
     }
@@ -107,8 +109,11 @@ class MainView: UIView, ConwayGameDelegate {
     }
     
     func drawGrid(rect: CGRect) {
+//        NSLog("drawGrid started")
+        
         let ctx = UIGraphicsGetCurrentContext()
         CGContextSetLineWidth(ctx, 0.5)
+        CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
         
         var columns = gameBoard.cols
         var rows = gameBoard.rows
@@ -116,25 +121,33 @@ class MainView: UIView, ConwayGameDelegate {
         var width: CGFloat = rect.size.width / CGFloat(columns)
         var height: CGFloat = (rect.size.height - 50) / CGFloat(rows)
         
+        // Draw the grid
+        for row in 1...rows {
+            CGContextMoveToPoint(ctx, 0.0, CGFloat(row) * height)
+            CGContextAddLineToPoint(ctx, rect.size.width, CGFloat(row) * height)
+            CGContextStrokePath(ctx)
+        }
+        
+        for col in 1...columns {
+            CGContextMoveToPoint(ctx, CGFloat(col) * width, 0.0)
+            CGContextAddLineToPoint(ctx, CGFloat(col) * width, rect.size.height - 50)
+            CGContextStrokePath(ctx)
+        }
+        
         for x in Range(start: 0, end: rows) {
             var curYStart: CGFloat = height * CGFloat(x)
             
             for y in Range(start: 0, end: columns) {
-                var curXStart: CGFloat = width * CGFloat(y)
-                var curCell = CGRectMake(curXStart, curYStart, width, height);
-                
-                if gameBoard.board[x][y] as NSObject == true {
-                    CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
+                if gameBoard.board[x][y].state {
+                    var curXStart: CGFloat = width * CGFloat(y)
+                    var curCell = CGRectMake(curXStart, curYStart, width, height);
+                    
+                    CGContextFillRect(ctx, curCell)
                 }
-                else {
-                    CGContextSetFillColorWithColor(ctx, UIColor.whiteColor().CGColor)
-                }
-                
-                CGContextFillRect(ctx, curCell)
-                
-                CGContextStrokeRect(ctx, curCell)
             }
         }
+        
+//        NSLog("drawGrid ended")
     }
     
     func gameDidStart(game: ConwayGame) {
@@ -142,8 +155,6 @@ class MainView: UIView, ConwayGameDelegate {
     }
     
     func gameDidUpdate(game: ConwayGame) {
-//        NSLog("ConwayGame updated")
-        
         self.setNeedsDisplay()
     }
     
