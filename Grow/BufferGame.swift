@@ -11,11 +11,11 @@ import UIKit
 
 class UIBufferSettingsTableViewController: UITableViewController {
     
-    var rows: Int = 20
-    var columns: Int = 10
+    var rows: Int = 50
+    var columns: Int = 25
     var percent: Int = 50
-    var bufferFrames: Int = 1000
-    var framerate: Int = 60
+    var bufferFrames: Int = 500
+    var framerate: Int = 10
     
     @IBOutlet var lblRows: UILabel!
     @IBOutlet var lblColumns: UILabel!
@@ -104,6 +104,7 @@ class UIBufferSettingsViewController: UIViewController {
         else if segue.identifier == "bufferGenerate" {
             let destController = segue.destinationViewController as UIBufferViewController
             destController.gameStates = gameStates
+            destController.framerate = navController.framerate
         }
     }
     
@@ -123,7 +124,7 @@ class UIBufferSettingsViewController: UIViewController {
         
         gameStates.append(curState.board)
         
-        for i in 0...frames - 1 {
+        for i in 0...frames - 2 {
             curState.updateGame()
             gameStates.append(curState.board)
             self.progressBar.setProgress(Float(i) / Float(frames), animated: true)
@@ -145,8 +146,9 @@ class UIBufferSettingsViewController: UIViewController {
 }
 
 class UIBufferViewController: UIViewController {
-    var bufferPlaybackViewController: UIBufferPlaybackViewController
+    var playbackVC: UIBufferPlaybackViewController?
     var gameStates: [[[Cell]]] = [[[Cell]]]()
+    var framerate = 0
     
     @IBOutlet var lblFPS: UILabel!
     @IBOutlet var lblFrame: UILabel!
@@ -154,16 +156,11 @@ class UIBufferViewController: UIViewController {
     @IBOutlet var btnStart: UIButton!
     
     @IBAction func btnStartPressed(sender: AnyObject) {
+        playbackVC?.startPlayback()
     }
     
     @IBAction func btnDismissPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: {})
-    }
-    
-    required init(coder aDecoder: NSCoder) {
-        self.bufferPlaybackViewController = UIBufferPlaybackViewController(coder: aDecoder)
-        
-        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
@@ -178,45 +175,54 @@ class UIBufferViewController: UIViewController {
         if segue.identifier == "bufferPlaybackEmbedded" {
             let destController = segue.destinationViewController as UIBufferPlaybackViewController
             destController.gameStates = gameStates
+            destController.framerate = framerate
+            destController.mainVC = self
+            self.playbackVC = destController
         }
     }
 }
 
 class UIBufferPlaybackViewController: UIViewController {
-    var bufferPlaybackView: UIBufferPlaybackView
+    var mainVC: UIBufferViewController?
+    var bufferPlaybackView: UIBufferPlaybackView = UIBufferPlaybackView()
+    var framerate = 0
     var gameStates: [[[Cell]]] = [[[Cell]]]()
-    
-    required init(coder aDecoder: NSCoder) {
-        self.bufferPlaybackView = UIBufferPlaybackView(coder: aDecoder)
-        
-        super.init(coder: aDecoder)
-    }
 
     override func viewDidLoad() {
-        NSLog("UIBufferPlaybackViewController frame height: \(self.view.frame.size.height)")
+        if mainVC == nil {
+            NSLog("mainVC is nil in UIBufferPlaybackViewController")
+        }
         
+        self.mainVC?.lblFPS.text = "FPS: \(framerate)"
         self.bufferPlaybackView.gameStates = gameStates
+        self.bufferPlaybackView.framerate = framerate
+        self.bufferPlaybackView.mainVC = mainVC
+        self.bufferPlaybackView.backgroundColor = UIColor.whiteColor()
         self.view = self.bufferPlaybackView
     }
     
-    override func prefersStatusBarHidden() -> Bool {
-        return true
+    func startPlayback() {
+        bufferPlaybackView.playbackTimer = NSTimer.scheduledTimerWithTimeInterval(1 / Double(framerate), target: bufferPlaybackView, selector: "start", userInfo: nil, repeats: true)
     }
 }
 
 class UIBufferPlaybackView: UIView {
+    var mainVC: UIBufferViewController? 
     var gameStates: [[[Cell]]] = [[[Cell]]]()
+    var framerate = 0
     var curIndex = 0
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+    var lastTime = NSDate()
+    var playbackTimer = NSTimer()
     
     override func drawRect(rect: CGRect) {
         NSLog("UIBufferPlaybackView rect height: \(rect.size.height)")
         
-        gridTest(rect)
-//        drawGrid(rect)
+        drawGrid(rect)
+    }
+    
+    func start() {
+        curIndex++
+        self.setNeedsDisplay()
     }
     
     func gridTest(rect: CGRect) {
@@ -244,9 +250,22 @@ class UIBufferPlaybackView: UIView {
     }
     
     func drawGrid(rect: CGRect) {
+        if curIndex >= gameStates.count {
+            playbackTimer.invalidate()
+            curIndex = 0
+            return
+        }
+        
         let ctx = UIGraphicsGetCurrentContext()
         CGContextSetLineWidth(ctx, 0.5)
         CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
+        
+        let thisTime = NSDate()
+        let FPSText = NSString(format: "%.2f", 1 / thisTime.timeIntervalSinceDate(lastTime))
+        
+        mainVC?.lblFPS.text = "FPS: " + FPSText
+        mainVC?.lblFrame.text = "Frame: \(curIndex + 1)/\(gameStates.count)"
+        lastTime = thisTime
     
         let curBoard = gameStates[curIndex]
         
@@ -255,6 +274,8 @@ class UIBufferPlaybackView: UIView {
         
         var width: CGFloat = rect.size.width / CGFloat(columns)
         var height: CGFloat = rect.size.height / CGFloat(rows)
+        
+        var rectCount = 0
         
         // Draw the grid
         for row in 1...rows {
@@ -278,8 +299,12 @@ class UIBufferPlaybackView: UIView {
                     var curCell = CGRectMake(curXStart, curYStart, width, height);
                     
                     CGContextFillRect(ctx, curCell)
+                    rectCount++
                 }
             }
         }
+        
+        curIndex++
+        mainVC?.lblSquares.text = "Squares: \(rectCount)"
     }
 }

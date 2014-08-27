@@ -52,7 +52,7 @@ class UISideViewController: UIViewController {
 }
 
 class UISideMainView: UIView {
-    
+  
 }
 
 class UISideMenuView: UIView {
