@@ -15,7 +15,105 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2041.5" y="515"/>
+            <point key="canvasLocation" x="2041.5" y="585"/>
+        </scene>
+        <!--Buffer View Controller-->
+        <scene sceneID="2mQ-54-3Gt">
+            <objects>
+                <viewController id="Pou-Td-Uud" customClass="UIBufferViewController" customModule="Grow" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sUh-xt-NXc"/>
+                        <viewControllerLayoutGuide type="bottom" id="Roh-yU-qNR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vSH-Dk-hDX">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sei-ce-jww">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="551"/>
+                                </variation>
+                                <connections>
+                                    <segue destination="4oq-yJ-Fer" kind="embed" identifier="bufferPlaybackEmbedded" id="CpX-RZ-Lw9"/>
+                                </connections>
+                            </containerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frame: 0/0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xhP-R5-EWk">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Ui7-QV-gXg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Ui7-QV-gXg"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Ui7-QV-gXg"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FPS: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXN-iv-3gQ">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="S7l-6l-HZz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="S7l-6l-HZz"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="S7l-6l-HZz"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Roh-yU-qNR" firstAttribute="top" secondItem="xhP-R5-EWk" secondAttribute="bottom" id="98x-iA-yfx"/>
+                            <constraint firstItem="xhP-R5-EWk" firstAttribute="top" secondItem="PXN-iv-3gQ" secondAttribute="bottom" constant="-12" id="C7Z-yk-uhE"/>
+                            <constraint firstItem="PXN-iv-3gQ" firstAttribute="leading" secondItem="vSH-Dk-hDX" secondAttribute="leadingMargin" constant="-8" id="ExF-OW-ktt"/>
+                            <constraint firstItem="xhP-R5-EWk" firstAttribute="leading" secondItem="vSH-Dk-hDX" secondAttribute="leadingMargin" constant="-8" id="ouc-8n-UwT"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="Sei-ce-jww"/>
+                                <exclude reference="xhP-R5-EWk"/>
+                                <exclude reference="PXN-iv-3gQ"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="ExF-OW-ktt"/>
+                                <exclude reference="C7Z-yk-uhE"/>
+                                <exclude reference="ouc-8n-UwT"/>
+                                <exclude reference="98x-iA-yfx"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="Sei-ce-jww"/>
+                                <include reference="xhP-R5-EWk"/>
+                                <include reference="PXN-iv-3gQ"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="ExF-OW-ktt"/>
+                                <include reference="C7Z-yk-uhE"/>
+                                <include reference="ouc-8n-UwT"/>
+                                <include reference="98x-iA-yfx"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d8j-Wt-HDs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2796" y="515"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Lm4-6T-LOJ">
@@ -109,27 +207,37 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yoC-wv-iG7">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <connections>
-                                    <segue destination="vkn-bU-UpU" kind="embed" id="sNM-QQ-8Yo"/>
+                                    <segue destination="vkn-bU-UpU" kind="embed" identifier="bufferSettingsEmbeded" id="sNM-QQ-8Yo"/>
                                 </connections>
                             </containerView>
+                            <progressView opaque="NO" alpha="0.0" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vo0-cw-eNJ">
+                                <rect key="frame" x="0.0" y="-2" width="150" height="2"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="1Hk-kJ-ceF" secondAttribute="centerX" constant="-0.5" id="07U-oU-iZ5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="yoC-wv-iG7" secondAttribute="trailing" constant="-16" id="5mS-Ol-CKe"/>
                             <constraint firstItem="Mk0-pG-7Aa" firstAttribute="top" secondItem="1Hk-kJ-ceF" secondAttribute="bottom" constant="8" id="Epd-02-txW"/>
+                            <constraint firstItem="Vo0-cw-eNJ" firstAttribute="trailing" secondItem="SOU-Ed-PcF" secondAttribute="trailingMargin" id="QOz-qO-20A"/>
+                            <constraint firstItem="Mk0-pG-7Aa" firstAttribute="top" secondItem="yoC-wv-iG7" secondAttribute="bottom" constant="46" id="cKL-ow-ScN"/>
                             <constraint firstItem="yoC-wv-iG7" firstAttribute="top" secondItem="D7C-jz-MfM" secondAttribute="bottom" constant="-20" id="cOm-yV-2iD"/>
+                            <constraint firstItem="Vo0-cw-eNJ" firstAttribute="leading" secondItem="SOU-Ed-PcF" secondAttribute="leadingMargin" id="gUU-3G-aTR"/>
+                            <constraint firstItem="Mk0-pG-7Aa" firstAttribute="top" secondItem="Vo0-cw-eNJ" secondAttribute="bottom" constant="43" id="ia9-Th-ctq"/>
                             <constraint firstItem="yoC-wv-iG7" firstAttribute="leading" secondItem="SOU-Ed-PcF" secondAttribute="leadingMargin" constant="-16" id="lve-ni-pCt"/>
-                            <constraint firstItem="Mk0-pG-7Aa" firstAttribute="top" secondItem="yoC-wv-iG7" secondAttribute="bottom" constant="46" id="n88-vV-Gju"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="1Hk-kJ-ceF"/>
                                 <exclude reference="yoC-wv-iG7"/>
+                                <exclude reference="Vo0-cw-eNJ"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="Epd-02-txW"/>
-                                <exclude reference="n88-vV-Gju"/>
+                                <exclude reference="cKL-ow-ScN"/>
+                                <exclude reference="ia9-Th-ctq"/>
+                                <exclude reference="QOz-qO-20A"/>
+                                <exclude reference="gUU-3G-aTR"/>
                                 <exclude reference="07U-oU-iZ5"/>
                                 <exclude reference="5mS-Ol-CKe"/>
                                 <exclude reference="cOm-yV-2iD"/>
@@ -140,10 +248,14 @@
                             <mask key="subviews">
                                 <include reference="1Hk-kJ-ceF"/>
                                 <include reference="yoC-wv-iG7"/>
+                                <include reference="Vo0-cw-eNJ"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="Epd-02-txW"/>
-                                <include reference="n88-vV-Gju"/>
+                                <include reference="cKL-ow-ScN"/>
+                                <include reference="ia9-Th-ctq"/>
+                                <include reference="QOz-qO-20A"/>
+                                <include reference="gUU-3G-aTR"/>
                                 <include reference="07U-oU-iZ5"/>
                                 <include reference="5mS-Ol-CKe"/>
                                 <include reference="cOm-yV-2iD"/>
@@ -151,6 +263,12 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="btnGenerate" destination="1Hk-kJ-ceF" id="lZu-qG-4Rm"/>
+                        <outlet property="containerView" destination="yoC-wv-iG7" id="Enh-Pq-kjS"/>
+                        <outlet property="progressBar" destination="Vo0-cw-eNJ" id="knL-PX-Wm5"/>
+                        <segue destination="Pou-Td-Uud" kind="show" identifier="bufferGenerate" id="wOa-Mg-lHn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="89D-2Q-B4e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -378,18 +496,18 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sn9-Xh-DdX" id="eRU-1o-fPU">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="60" minimumValue="1" maximumValue="120" translatesAutoresizingMaskIntoConstraints="NO" id="AMu-1D-Azc">
-                                                    <rect key="frame" x="-47" y="-14" width="94" height="29"/>
-                                                    <connections>
-                                                        <action selector="stepFramerate:" destination="vkn-bU-UpU" eventType="valueChanged" id="wUx-YH-HAV"/>
-                                                    </connections>
-                                                </stepper>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Framerate: 60 FPS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rN9-lX-rAu">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="60" minimumValue="1" maximumValue="120" translatesAutoresizingMaskIntoConstraints="NO" id="AMu-1D-Azc">
+                                                    <rect key="frame" x="-47" y="-14" width="94" height="29"/>
+                                                    <connections>
+                                                        <action selector="stepFramerate:" destination="vkn-bU-UpU" eventType="valueChanged" id="wUx-YH-HAV"/>
+                                                    </connections>
+                                                </stepper>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="AMu-1D-Azc" secondAttribute="bottom" constant="-0.5" id="9ha-Ie-HYk"/>
@@ -399,8 +517,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
-                                                    <exclude reference="AMu-1D-Azc"/>
                                                     <exclude reference="rN9-lX-rAu"/>
+                                                    <exclude reference="AMu-1D-Azc"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <exclude reference="CUN-ms-okF"/>
@@ -411,8 +529,8 @@
                                             </variation>
                                             <variation key="widthClass=compact">
                                                 <mask key="subviews">
-                                                    <include reference="AMu-1D-Azc"/>
                                                     <include reference="rN9-lX-rAu"/>
+                                                    <include reference="AMu-1D-Azc"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <include reference="CUN-ms-okF"/>
@@ -459,6 +577,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ane-sh-SGK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="466.5" y="175"/>
+        </scene>
+        <!--Buffer Playback View Controller-->
+        <scene sceneID="M3l-BC-Bzo">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Te-HW-2yO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="4oq-yJ-Fer" customClass="UIBufferPlaybackViewController" customModule="Grow" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="3538.5" y="490.5"/>
         </scene>
     </scenes>
 </document>

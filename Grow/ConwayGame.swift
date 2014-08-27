@@ -68,8 +68,6 @@ class ConwayGame {
                     continue
                 }
                 
-//                NSLog("X Loc: \(xLoc + x) Y Loc: \(yLoc + y)") 
-                
                 let startingNeighbors = board[x + xLoc][y + yLoc].neighbors
                 let startingState = board[x + xLoc][y + yLoc].state
                 
