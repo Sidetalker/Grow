@@ -76,6 +76,8 @@ class UIBufferSettingsViewController: UIViewController {
     @IBOutlet var containerView: UIView!
     @IBOutlet var progressBar: UIProgressView!
     @IBOutlet var btnGenerate: UIButton!
+    @IBOutlet var btnExit: UIButton!
+    @IBOutlet var lblMemory: UILabel!
     
     @IBAction func btnGenerate(sender: AnyObject) {
         NSLog("btnGenerate fired")
@@ -84,6 +86,9 @@ class UIBufferSettingsViewController: UIViewController {
             self.performSegueWithIdentifier("bufferGenerate", sender: self)
             return
         }
+        
+        self.btnGenerate.enabled = false
+        self.btnExit.enabled = false
         
         UIView.animateWithDuration(1, animations: {
             let curFrame: CGRect = self.containerView.frame
@@ -94,6 +99,17 @@ class UIBufferSettingsViewController: UIViewController {
         
         dispatch_async(dispatch_get_main_queue()) {
             self.buildGenerations()
+        }
+    }
+    
+    @IBAction func btnExit(sender: AnyObject) {
+        if self.btnExit.titleLabel.text == "Exit" {
+            self.dismissViewControllerAnimated(true, completion: {})
+        }
+        else {
+            self.gameStates = [[[Cell]]]()
+            self.btnExit.setTitle("Exit", forState: UIControlState.Normal)
+            self.btnGenerate.setTitle("Generate", forState: UIControlState.Normal)
         }
     }
     
@@ -109,8 +125,6 @@ class UIBufferSettingsViewController: UIViewController {
     }
     
     func buildGenerations() {
-        self.btnGenerate.enabled = false
-        
         gameStates = [[[Cell]]]()
         
         let rows = navController.rows
@@ -125,6 +139,7 @@ class UIBufferSettingsViewController: UIViewController {
         gameStates.append(curState.board)
         
         for i in 0...frames - 2 {
+//            lblMemory.text = String(i + 2)
             curState.updateGame()
             gameStates.append(curState.board)
             self.progressBar.setProgress(Float(i) / Float(frames), animated: true)
@@ -134,14 +149,25 @@ class UIBufferSettingsViewController: UIViewController {
         
         self.progressBar.setProgress(0.0, animated: true)
         
-        UIView.animateWithDuration(1, animations: {
-            let curFrame: CGRect = self.containerView.frame
-            let newFrame = CGRectMake(0, 0, curFrame.width, curFrame.height + 17)
-            self.containerView.frame = newFrame
-            self.progressBar.alpha = 0
-            self.btnGenerate.setTitle("Display", forState: UIControlState.Normal)
-            self.btnGenerate.enabled = true
+        UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.CurveEaseIn,
+            animations: {() in
+                let curFrame: CGRect = self.containerView.frame
+                let newFrame = CGRectMake(0, 0, curFrame.width, curFrame.height + 17)
+                self.containerView.frame = newFrame
+                self.progressBar.alpha = 0
+                self.btnGenerate.setTitle("Display", forState: UIControlState.Normal)
+                self.btnExit.setTitle("Clear", forState: UIControlState.Normal)
+            },
+            completion: {(Bool) in
+                self.btnGenerate.enabled = true
+                self.btnExit.enabled = true
         })
+        
+    }
+    
+    func toggleButtons(onOff: Bool) {
+        self.btnExit.enabled = onOff
+        self.btnGenerate.enabled = onOff
     }
 }
 
@@ -156,7 +182,14 @@ class UIBufferViewController: UIViewController {
     @IBOutlet var btnStart: UIButton!
     
     @IBAction func btnStartPressed(sender: AnyObject) {
-        playbackVC?.startPlayback()
+        if self.btnStart.titleLabel.text == "Start" {
+            self.btnStart.setTitle("Stop", forState: UIControlState.Normal)
+            playbackVC?.startPlayback()
+        }
+        else {
+            self.btnStart.setTitle("Start", forState: UIControlState.Normal)
+            playbackVC?.stopPlayback()
+        }
     }
     
     @IBAction func btnDismissPressed(sender: AnyObject) {
@@ -202,7 +235,11 @@ class UIBufferPlaybackViewController: UIViewController {
     }
     
     func startPlayback() {
-        bufferPlaybackView.playbackTimer = NSTimer.scheduledTimerWithTimeInterval(1 / Double(framerate), target: bufferPlaybackView, selector: "start", userInfo: nil, repeats: true)
+        bufferPlaybackView.playbackTimer = NSTimer.scheduledTimerWithTimeInterval(1 / Double(framerate), target: bufferPlaybackView, selector: "tick", userInfo: nil, repeats: true)
+    }
+    
+    func stopPlayback() {
+        bufferPlaybackView.playbackTimer.invalidate()
     }
 }
 
@@ -220,7 +257,7 @@ class UIBufferPlaybackView: UIView {
         drawGrid(rect)
     }
     
-    func start() {
+    func tick() {
         curIndex++
         self.setNeedsDisplay()
     }
@@ -252,8 +289,7 @@ class UIBufferPlaybackView: UIView {
     func drawGrid(rect: CGRect) {
         if curIndex >= gameStates.count {
             playbackTimer.invalidate()
-            curIndex = 0
-            return
+            curIndex--
         }
         
         let ctx = UIGraphicsGetCurrentContext()

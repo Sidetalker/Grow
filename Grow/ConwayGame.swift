@@ -89,8 +89,6 @@ class ConwayGame {
                         board[x + xLoc][y + yLoc].changed = true
                     }
                 }
-                
-//                board[x + xLoc][y + yLoc].changed = true
             }
         }
     }

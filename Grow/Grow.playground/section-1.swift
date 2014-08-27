@@ -1,20 +1,7 @@
 // Playground - noun: a place where people can play
 
 import UIKit
-
-let testRect: CGRect = CGRectMake(0, 0, 100, 100)
-
-
-
-
-
-
-
-
-
-
-
-
+import Darwin
 
 println("Hello World")
 
@@ -46,7 +33,7 @@ let emptyDict = [String:Float]()
 let emptyArrayInferred = []
 let emptyDictInferred = [:]
 
-let individualScores = [75, 43, 103, 87, 12]
+var individualScores = [75, 43, 103, 87, 12]
 var teamScore = 0
 for score in individualScores {
     if score > 50 {
@@ -55,6 +42,10 @@ for score in individualScores {
         teamScore += 1
     }
 }
+
+malloc_size(individualScores)
+malloc_size(individualScores)
+
 
 var optionalString: String? = "Hello"
 optionalString == nil
