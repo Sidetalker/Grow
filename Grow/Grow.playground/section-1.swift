@@ -2,6 +2,20 @@
 
 import UIKit
 
+let testRect: CGRect = CGRectMake(0, 0, 100, 100)
+
+
+
+
+
+
+
+
+
+
+
+
+
 println("Hello World")
 
 let constantDouble: Double = 4.0

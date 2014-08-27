@@ -47,7 +47,7 @@ class UIBufferSettingsTableViewController: UITableViewController {
     @IBAction func stepPercent(sender: AnyObject) {
         let stepper = sender as UIStepper
         percent = Int(stepper.value)
-        lblPercent.text = "Percent Fill: \(Int(stepper.value))%"
+        lblPercent.text = "Percentage Fill: \(Int(stepper.value))%"
         
         NSLog("stepPercent fired")
     }
@@ -70,7 +70,7 @@ class UIBufferSettingsTableViewController: UITableViewController {
 }
 
 class UIBufferSettingsViewController: UIViewController {
-    var gameStates: [ConwayGame] = [ConwayGame]()
+    var gameStates: [[[Cell]]] = [[[Cell]]]()
     var navController = UIBufferSettingsTableViewController()
     
     @IBOutlet var containerView: UIView!
@@ -82,7 +82,6 @@ class UIBufferSettingsViewController: UIViewController {
         
         if btnGenerate.titleLabel.text == "Display" {
             self.performSegueWithIdentifier("bufferGenerate", sender: self)
-            
             return
         }
         
@@ -109,7 +108,9 @@ class UIBufferSettingsViewController: UIViewController {
     }
     
     func buildGenerations() {
-        gameStates = [ConwayGame]()
+        self.btnGenerate.enabled = false
+        
+        gameStates = [[[Cell]]]()
         
         let rows = navController.rows
         let cols = navController.columns
@@ -120,11 +121,11 @@ class UIBufferSettingsViewController: UIViewController {
         
         curState.populateBoard(Double(percent))
         
-        gameStates.append(curState)
+        gameStates.append(curState.board)
         
         for i in 0...frames - 1 {
             curState.updateGame()
-            gameStates.append(curState)
+            gameStates.append(curState.board)
             self.progressBar.setProgress(Float(i) / Float(frames), animated: true)
             
             NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeInterval: 0.001, sinceDate: NSDate()))
@@ -138,13 +139,14 @@ class UIBufferSettingsViewController: UIViewController {
             self.containerView.frame = newFrame
             self.progressBar.alpha = 0
             self.btnGenerate.setTitle("Display", forState: UIControlState.Normal)
+            self.btnGenerate.enabled = true
         })
     }
 }
 
 class UIBufferViewController: UIViewController {
     var bufferPlaybackViewController: UIBufferPlaybackViewController
-    var gameStates = [ConwayGame]()
+    var gameStates: [[[Cell]]] = [[[Cell]]]()
     
     required init(coder aDecoder: NSCoder) {
         self.bufferPlaybackViewController = UIBufferPlaybackViewController(coder: aDecoder)
@@ -152,97 +154,120 @@ class UIBufferViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-//    override func viewDidLoad() {
-//        return
-//    }
+    override func viewDidLoad() {
+        NSLog("UIBufferViewController frame height: \(self.view.frame.size.height)")
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+        if segue.identifier == "bufferPlaybackEmbedded" {
+            let destController = segue.destinationViewController as UIBufferPlaybackViewController
+            destController.gameStates = gameStates
+        }
+    }
 }
 
 class UIBufferPlaybackViewController: UIViewController {
     var bufferPlaybackView: UIBufferPlaybackView
+    var gameStates: [[[Cell]]] = [[[Cell]]]()
     
     required init(coder aDecoder: NSCoder) {
         self.bufferPlaybackView = UIBufferPlaybackView(coder: aDecoder)
         
         super.init(coder: aDecoder)
     }
-    
+
     override func viewDidLoad() {
+        NSLog("UIBufferPlaybackViewController frame height: \(self.view.frame.size.height)")
+        
+        self.bufferPlaybackView.gameStates = gameStates
         self.view = self.bufferPlaybackView
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 }
 
 class UIBufferPlaybackView: UIView {
+    var gameStates: [[[Cell]]] = [[[Cell]]]()
+    var curIndex = 0
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     override func drawRect(rect: CGRect) {
-        drawTest(rect)
+        NSLog("UIBufferPlaybackView rect height: \(rect.size.height)")
+        
+        gridTest(rect)
+//        drawGrid(rect)
     }
-
-    func drawTest(rect: CGRect) {
-                let ctx = UIGraphicsGetCurrentContext()
-                CGContextSetLineWidth(ctx, 0.5)
-                CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
+    
+    func gridTest(rect: CGRect) {
+        let ctx = UIGraphicsGetCurrentContext()
+        CGContextSetLineWidth(ctx, 0.5)
+        CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
         
-                var columns = 10
-                var rows = 20
+        var columns = 10
+        var rows = 20
         
-                var width: CGFloat = rect.size.width / CGFloat(columns)
-                var height: CGFloat = (rect.size.height - 50) / CGFloat(rows)
+        var width: CGFloat = rect.size.width / CGFloat(columns)
+        var height: CGFloat = rect.size.height / CGFloat(rows)
         
-                // Draw the grid
-                for row in 1...rows {
-                    CGContextMoveToPoint(ctx, 0.0, CGFloat(row) * height)
-                    CGContextAddLineToPoint(ctx, rect.size.width, CGFloat(row) * height)
-                    CGContextStrokePath(ctx)
-                }
+        for row in 1...rows {
+            CGContextMoveToPoint(ctx, 0.0, CGFloat(row) * height)
+            CGContextAddLineToPoint(ctx, rect.size.width, CGFloat(row) * height)
+            CGContextStrokePath(ctx)
+        }
         
-                for col in 1...columns {
-                    CGContextMoveToPoint(ctx, CGFloat(col) * width, 0.0)
-                    CGContextAddLineToPoint(ctx, CGFloat(col) * width, rect.size.height - 50)
-                    CGContextStrokePath(ctx)
-                }
+        for col in 1...columns {
+            CGContextMoveToPoint(ctx, CGFloat(col) * width, 0.0)
+            CGContextAddLineToPoint(ctx, CGFloat(col) * width, rect.size.height)
+            CGContextStrokePath(ctx)
+        }
     }
-//    func drawGrid(rect: CGRect) {
-//        NSLog("drawGrid started")
-//        
-//        let ctx = UIGraphicsGetCurrentContext()
-//        CGContextSetLineWidth(ctx, 0.5)
-//        CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
-//        
-//        var columns = gameBoard.cols
-//        var rows = gameBoard.rows
-//        
-//        var width: CGFloat = rect.size.width / CGFloat(columns)
-//        var height: CGFloat = (rect.size.height - 50) / CGFloat(rows)
-//        
-//        // Draw the grid
-//        for row in 1...rows {
-//            CGContextMoveToPoint(ctx, 0.0, CGFloat(row) * height)
-//            CGContextAddLineToPoint(ctx, rect.size.width, CGFloat(row) * height)
-//            CGContextStrokePath(ctx)
-//        }
-//        
-//        for col in 1...columns {
-//            CGContextMoveToPoint(ctx, CGFloat(col) * width, 0.0)
-//            CGContextAddLineToPoint(ctx, CGFloat(col) * width, rect.size.height - 50)
-//            CGContextStrokePath(ctx)
-//        }
-//        
-//        for x in Range(start: 0, end: rows) {
-//            var curYStart: CGFloat = height * CGFloat(x)
-//            
-//            for y in Range(start: 0, end: columns) {
-//                if gameBoard.board[x][y].state {
-//                    var curXStart: CGFloat = width * CGFloat(y)
-//                    var curCell = CGRectMake(curXStart, curYStart, width, height);
-//                    
-//                    CGContextFillRect(ctx, curCell)
-//                }
-//            }
-//        }
-//        
-//        NSLog("drawGrid ended")
-//    }
+    
+    func drawGrid(rect: CGRect) {
+        let ctx = UIGraphicsGetCurrentContext()
+        CGContextSetLineWidth(ctx, 0.5)
+        CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
+    
+        let curBoard = gameStates[curIndex]
+        
+        var rows = curBoard.count
+        var columns = curBoard[0].count
+        
+        var width: CGFloat = rect.size.width / CGFloat(columns)
+        var height: CGFloat = rect.size.height / CGFloat(rows)
+        
+        // Draw the grid
+        for row in 1...rows {
+            CGContextMoveToPoint(ctx, 0.0, CGFloat(row) * height)
+            CGContextAddLineToPoint(ctx, rect.size.width, CGFloat(row) * height)
+            CGContextStrokePath(ctx)
+        }
+        
+        for col in 1...columns {
+            CGContextMoveToPoint(ctx, CGFloat(col) * width, 0.0)
+            CGContextAddLineToPoint(ctx, CGFloat(col) * width, rect.size.height)
+            CGContextStrokePath(ctx)
+        }
+        
+        for x in Range(start: 0, end: rows) {
+            var curYStart: CGFloat = height * CGFloat(x)
+            
+            for y in Range(start: 0, end: columns) {
+                if curBoard[x][y].state {
+                    var curXStart: CGFloat = width * CGFloat(y)
+                    var curCell = CGRectMake(curXStart, curYStart, width, height);
+                    
+                    CGContextFillRect(ctx, curCell)
+                }
+            }
+        }
+    }
 }
