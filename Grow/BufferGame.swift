@@ -148,6 +148,18 @@ class UIBufferViewController: UIViewController {
     var bufferPlaybackViewController: UIBufferPlaybackViewController
     var gameStates: [[[Cell]]] = [[[Cell]]]()
     
+    @IBOutlet var lblFPS: UILabel!
+    @IBOutlet var lblFrame: UILabel!
+    @IBOutlet var lblSquares: UILabel!
+    @IBOutlet var btnStart: UIButton!
+    
+    @IBAction func btnStartPressed(sender: AnyObject) {
+    }
+    
+    @IBAction func btnDismissPressed(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: {})
+    }
+    
     required init(coder aDecoder: NSCoder) {
         self.bufferPlaybackViewController = UIBufferPlaybackViewController(coder: aDecoder)
         
