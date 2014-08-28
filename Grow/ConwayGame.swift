@@ -103,7 +103,7 @@ class ConwayGame {
         updater = NSTimer.scheduledTimerWithTimeInterval(fps, target: self, selector: Selector("updateGame"), userInfo: nil, repeats: true)
     }
     
-    @objc func updateGame() {
+    @objc func updateGame() -> Bool {
         delegate?.gameDidUpdate(self)
         
 //        NSLog("Game Update Calculation Begin")
@@ -115,6 +115,7 @@ class ConwayGame {
         
         var newBoard: [[Cell]] = board
         var allDead = true
+        var updated = false
         
         for x in Range(start: 0, end: rows) {
             for y in Range(start: 0, end: cols) {
@@ -129,17 +130,13 @@ class ConwayGame {
                     
                     if neighborCount < 2 || neighborCount > 3 {
                         toggleCell(x, yLoc: y, board: &newBoard)
-                    }
-                    else {
-//                        NSLog("Wasted toggle (state bug = true)")
+                        updated = true
                     }
                 }
                 else {
                     if neighborCount == 3 {
                         toggleCell(x, yLoc: y, board: &newBoard)
-                    }
-                    else {
-//                        NSLog("Wasted toggle (state bug = false)")
+                        updated = true
                     }
                 }
             }
@@ -151,7 +148,7 @@ class ConwayGame {
         
         board = newBoard
         
-//        NSLog("Game Update Calculation End")
+        return updated
     }
     
     func stopGame() {

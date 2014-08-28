@@ -448,9 +448,6 @@
                                                 </label>
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minimumValue="5" maximumValue="100" stepValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="kGX-E1-Ing">
                                                     <rect key="frame" x="-47" y="-14" width="94" height="29"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="138" y="7" width="94" height="29"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="stepRows:" destination="vkn-bU-UpU" eventType="valueChanged" id="146-3f-2R8"/>
                                                     </connections>
@@ -496,9 +493,6 @@
                                             <subviews>
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="25" minimumValue="5" maximumValue="100" stepValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="axz-aT-ay4">
                                                     <rect key="frame" x="-47" y="-14" width="94" height="29"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="138" y="7" width="94" height="29"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="stepColumns:" destination="vkn-bU-UpU" eventType="valueChanged" id="hQa-AR-QF4"/>
                                                     </connections>
@@ -555,9 +549,6 @@
                                                 </label>
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minimumValue="5" maximumValue="100" stepValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="rly-a2-Ljd">
                                                     <rect key="frame" x="-47" y="-14" width="94" height="29"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="138" y="7" width="94" height="29"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="stepPercent:" destination="vkn-bU-UpU" eventType="valueChanged" id="7vP-ex-YDL"/>
                                                     </connections>
@@ -604,50 +595,47 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fWu-sD-wXK" id="KUh-NL-ehl">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Buffer Frames: 500" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGt-G5-2gi">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto Buffer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PqD-EO-CMB">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="500" minimumValue="100" maximumValue="1000000" stepValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="EtB-qf-1VI">
-                                                    <rect key="frame" x="-47" y="-14" width="94" height="29"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="138" y="7" width="94" height="29"/>
-                                                    </variation>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6ba-kY-0NV">
+                                                    <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                                     <connections>
-                                                        <action selector="stepBufferFrames:" destination="vkn-bU-UpU" eventType="valueChanged" id="xIT-Of-7cH"/>
+                                                        <action selector="toggleAutoBuffer:" destination="vkn-bU-UpU" eventType="valueChanged" id="txF-LJ-Ebr"/>
                                                     </connections>
-                                                </stepper>
+                                                </switch>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="cGt-G5-2gi" firstAttribute="leading" secondItem="KUh-NL-ehl" secondAttribute="leadingMargin" id="DAr-Eb-XPp"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="cGt-G5-2gi" secondAttribute="bottom" constant="3.5" id="SGX-dW-gWJ"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="EtB-qf-1VI" secondAttribute="bottom" constant="-0.5" id="bRU-lj-92o"/>
-                                                <constraint firstItem="EtB-qf-1VI" firstAttribute="trailing" secondItem="KUh-NL-ehl" secondAttribute="trailingMargin" id="jqW-ue-OrP"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="6ba-kY-0NV" secondAttribute="trailing" constant="23" id="Eew-ly-Nmq"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="PqD-EO-CMB" secondAttribute="bottom" constant="3.5" id="MCh-vX-9KS"/>
+                                                <constraint firstItem="PqD-EO-CMB" firstAttribute="leading" secondItem="KUh-NL-ehl" secondAttribute="leadingMargin" id="OzC-Ye-S8y"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="6ba-kY-0NV" secondAttribute="bottom" constant="-1.5" id="UzM-FC-6vP"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
-                                                    <exclude reference="cGt-G5-2gi"/>
-                                                    <exclude reference="EtB-qf-1VI"/>
+                                                    <exclude reference="PqD-EO-CMB"/>
+                                                    <exclude reference="6ba-kY-0NV"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="DAr-Eb-XPp"/>
-                                                    <exclude reference="SGX-dW-gWJ"/>
-                                                    <exclude reference="bRU-lj-92o"/>
-                                                    <exclude reference="jqW-ue-OrP"/>
+                                                    <exclude reference="MCh-vX-9KS"/>
+                                                    <exclude reference="OzC-Ye-S8y"/>
+                                                    <exclude reference="Eew-ly-Nmq"/>
+                                                    <exclude reference="UzM-FC-6vP"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
                                                 <mask key="subviews">
-                                                    <include reference="cGt-G5-2gi"/>
-                                                    <include reference="EtB-qf-1VI"/>
+                                                    <include reference="PqD-EO-CMB"/>
+                                                    <include reference="6ba-kY-0NV"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="DAr-Eb-XPp"/>
-                                                    <include reference="SGX-dW-gWJ"/>
-                                                    <include reference="bRU-lj-92o"/>
-                                                    <include reference="jqW-ue-OrP"/>
+                                                    <include reference="MCh-vX-9KS"/>
+                                                    <include reference="OzC-Ye-S8y"/>
+                                                    <include reference="Eew-ly-Nmq"/>
+                                                    <include reference="UzM-FC-6vP"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -658,103 +646,103 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sn9-Xh-DdX" id="eRU-1o-fPU">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="500" minimumValue="100" maximumValue="1000000" stepValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="EtB-qf-1VI">
+                                                    <rect key="frame" x="-47" y="-14" width="94" height="29"/>
+                                                    <connections>
+                                                        <action selector="stepBufferFrames:" destination="vkn-bU-UpU" eventType="valueChanged" id="xIT-Of-7cH"/>
+                                                    </connections>
+                                                </stepper>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Buffer Frames: 500" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGt-G5-2gi">
+                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="EtB-qf-1VI" firstAttribute="trailing" secondItem="eRU-1o-fPU" secondAttribute="trailingMargin" id="2a1-u1-Std"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="EtB-qf-1VI" secondAttribute="bottom" constant="-1.5" id="YK9-MW-sKX"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="cGt-G5-2gi" secondAttribute="bottom" constant="3" id="aLq-AB-Vgy"/>
+                                                <constraint firstItem="cGt-G5-2gi" firstAttribute="leading" secondItem="eRU-1o-fPU" secondAttribute="leadingMargin" id="v7f-ez-2ON"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="EtB-qf-1VI"/>
+                                                    <exclude reference="cGt-G5-2gi"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <exclude reference="aLq-AB-Vgy"/>
+                                                    <exclude reference="v7f-ez-2ON"/>
+                                                    <exclude reference="2a1-u1-Std"/>
+                                                    <exclude reference="YK9-MW-sKX"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="widthClass=compact">
+                                                <mask key="subviews">
+                                                    <include reference="EtB-qf-1VI"/>
+                                                    <include reference="cGt-G5-2gi"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <include reference="aLq-AB-Vgy"/>
+                                                    <include reference="v7f-ez-2ON"/>
+                                                    <include reference="2a1-u1-Std"/>
+                                                    <include reference="YK9-MW-sKX"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="MvU-rz-Eza">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MvU-rz-Eza" id="orH-Ry-FVE">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minimumValue="1" maximumValue="120" translatesAutoresizingMaskIntoConstraints="NO" id="6Yg-cg-Dvl">
+                                                    <rect key="frame" x="-47" y="-14" width="94" height="29"/>
+                                                    <connections>
+                                                        <action selector="stepFramerate:" destination="vkn-bU-UpU" eventType="valueChanged" id="ci6-Kx-88y"/>
+                                                    </connections>
+                                                </stepper>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Framerate: 10 FPS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rN9-lX-rAu">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minimumValue="1" maximumValue="120" translatesAutoresizingMaskIntoConstraints="NO" id="AMu-1D-Azc">
-                                                    <rect key="frame" x="-47" y="-14" width="94" height="29"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="138" y="7" width="94" height="29"/>
-                                                    </variation>
-                                                    <connections>
-                                                        <action selector="stepFramerate:" destination="vkn-bU-UpU" eventType="valueChanged" id="wUx-YH-HAV"/>
-                                                    </connections>
-                                                </stepper>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="AMu-1D-Azc" secondAttribute="bottom" constant="-0.5" id="9ha-Ie-HYk"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="rN9-lX-rAu" secondAttribute="bottom" constant="4.5" id="CUN-ms-okF"/>
-                                                <constraint firstItem="rN9-lX-rAu" firstAttribute="leading" secondItem="eRU-1o-fPU" secondAttribute="leadingMargin" id="fEG-Mi-J2m"/>
-                                                <constraint firstItem="AMu-1D-Azc" firstAttribute="trailing" secondItem="eRU-1o-fPU" secondAttribute="trailingMargin" id="xK4-Dm-1SY"/>
+                                                <constraint firstItem="6Yg-cg-Dvl" firstAttribute="trailing" secondItem="orH-Ry-FVE" secondAttribute="trailingMargin" id="2If-Sg-fLe"/>
+                                                <constraint firstItem="rN9-lX-rAu" firstAttribute="leading" secondItem="orH-Ry-FVE" secondAttribute="leadingMargin" id="6Lp-gw-WG9"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="6Yg-cg-Dvl" secondAttribute="bottom" constant="-0.5" id="K6N-xy-wXl"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="6Yg-cg-Dvl" secondAttribute="bottom" constant="-0.5" id="TI7-Ek-hc9"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="rN9-lX-rAu" secondAttribute="bottom" constant="3" id="Zkd-VA-Lbd"/>
+                                                <constraint firstItem="6Yg-cg-Dvl" firstAttribute="trailing" secondItem="orH-Ry-FVE" secondAttribute="trailingMargin" id="zt9-eN-tJm"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
+                                                    <exclude reference="6Yg-cg-Dvl"/>
                                                     <exclude reference="rN9-lX-rAu"/>
-                                                    <exclude reference="AMu-1D-Azc"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="CUN-ms-okF"/>
-                                                    <exclude reference="fEG-Mi-J2m"/>
-                                                    <exclude reference="9ha-Ie-HYk"/>
-                                                    <exclude reference="xK4-Dm-1SY"/>
+                                                    <exclude reference="6Lp-gw-WG9"/>
+                                                    <exclude reference="Zkd-VA-Lbd"/>
+                                                    <exclude reference="2If-Sg-fLe"/>
+                                                    <exclude reference="K6N-xy-wXl"/>
+                                                    <exclude reference="TI7-Ek-hc9"/>
+                                                    <exclude reference="zt9-eN-tJm"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
                                                 <mask key="subviews">
+                                                    <include reference="6Yg-cg-Dvl"/>
                                                     <include reference="rN9-lX-rAu"/>
-                                                    <include reference="AMu-1D-Azc"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="CUN-ms-okF"/>
-                                                    <include reference="fEG-Mi-J2m"/>
-                                                    <include reference="9ha-Ie-HYk"/>
-                                                    <include reference="xK4-Dm-1SY"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ge0-Qm-mrY">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ge0-Qm-mrY" id="qR8-gc-yj2">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Framerate: 10 FPS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJ4-Vl-jUS">
-                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minimumValue="1" maximumValue="120" translatesAutoresizingMaskIntoConstraints="NO" id="2Dd-k6-vLa">
-                                                    <rect key="frame" x="-47" y="-14" width="94" height="29"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="138" y="7" width="94" height="29"/>
-                                                    </variation>
-                                                    <connections>
-                                                        <action selector="stepFramerate:" destination="vkn-bU-UpU" eventType="valueChanged" id="zOk-2d-lwB"/>
-                                                    </connections>
-                                                </stepper>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="2Dd-k6-vLa" secondAttribute="bottom" constant="-0.5" id="Jci-Fb-zOv"/>
-                                                <constraint firstItem="2Dd-k6-vLa" firstAttribute="trailing" secondItem="qR8-gc-yj2" secondAttribute="trailingMargin" id="Lzb-df-fWz"/>
-                                                <constraint firstItem="KJ4-Vl-jUS" firstAttribute="leading" secondItem="qR8-gc-yj2" secondAttribute="leadingMargin" id="fqv-VW-20t"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="KJ4-Vl-jUS" secondAttribute="bottom" constant="4.5" id="nWV-jS-Bb6"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="subviews">
-                                                    <exclude reference="KJ4-Vl-jUS"/>
-                                                    <exclude reference="2Dd-k6-vLa"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <exclude reference="fqv-VW-20t"/>
-                                                    <exclude reference="nWV-jS-Bb6"/>
-                                                    <exclude reference="Jci-Fb-zOv"/>
-                                                    <exclude reference="Lzb-df-fWz"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="widthClass=compact">
-                                                <mask key="subviews">
-                                                    <include reference="KJ4-Vl-jUS"/>
-                                                    <include reference="2Dd-k6-vLa"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <include reference="fqv-VW-20t"/>
-                                                    <include reference="nWV-jS-Bb6"/>
-                                                    <include reference="Jci-Fb-zOv"/>
-                                                    <include reference="Lzb-df-fWz"/>
+                                                    <include reference="6Lp-gw-WG9"/>
+                                                    <include reference="Zkd-VA-Lbd"/>
+                                                    <include reference="2If-Sg-fLe"/>
+                                                    <include reference="K6N-xy-wXl"/>
+                                                    <include reference="TI7-Ek-hc9"/>
+                                                    <include reference="zt9-eN-tJm"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -773,6 +761,8 @@
                         <outlet property="lblFramerate" destination="rN9-lX-rAu" id="ywA-O9-2MF"/>
                         <outlet property="lblPercent" destination="MNo-XD-qA0" id="2fC-qc-4iT"/>
                         <outlet property="lblRows" destination="aG5-4Z-s6X" id="uac-HK-iTa"/>
+                        <outlet property="stepperBufferFrames" destination="EtB-qf-1VI" id="F2W-oo-HUC"/>
+                        <outlet property="toggleAutoBuffer" destination="6ba-kY-0NV" id="Jfc-aD-LVi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n2i-2j-SVE" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -22,10 +22,24 @@ class UIBufferSettingsTableViewController: UITableViewController {
     @IBOutlet var lblPercent: UILabel!
     @IBOutlet var lblBufferFrames: UILabel!
     @IBOutlet var lblFramerate: UILabel!
+    @IBOutlet var toggleAutoBuffer: UISwitch!
+    @IBOutlet var stepperBufferFrames: UIStepper!
     
     override func viewDidLoad() {
         let scrollView: UIScrollView = self.view as UIScrollView
         NSLog("delaysContentTouches: \(scrollView.delaysContentTouches)")
+    }
+    
+    @IBAction func toggleAutoBuffer(sender: AnyObject) {
+        if toggleAutoBuffer.on {
+            lblBufferFrames.text = "Buffer Frames: Auto"
+            stepperBufferFrames.enabled = false
+        }
+        else
+        {
+            lblBufferFrames.text = "Buffer Frames: \(bufferFrames)"
+            stepperBufferFrames.enabled = true
+        }
     }
     
     @IBAction func stepRows(sender: AnyObject) {
@@ -139,8 +153,16 @@ class UIBufferSettingsViewController: UIViewController {
         gameStates.append(curState.board)
         
         for i in 0...frames - 2 {
-//            lblMemory.text = String(i + 2)
-            curState.updateGame()
+            let changesMade = curState.updateGame()
+            
+            if navController.toggleAutoBuffer.on && !changesMade {
+                break
+            }
+            
+            if !changesMade {
+                NSLog("No changes made but buffer break didn't fire")
+            }
+            
             gameStates.append(curState.board)
             self.progressBar.setProgress(Float(i) / Float(frames), animated: true)
             
