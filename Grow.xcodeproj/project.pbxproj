@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5102DF2919B0EE91002619BD /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5102DF2819B0EE91002619BD /* ImageIO.framework */; };
+		5102DF2B19B0EE95002619BD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5102DF2A19B0EE95002619BD /* MobileCoreServices.framework */; };
 		5110A2A719A7951700CDF0F8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5110A2A619A7951700CDF0F8 /* MainView.swift */; };
 		515F91AA19ACE4FF005151E2 /* BufferGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515F91A919ACE4FF005151E2 /* BufferGame.swift */; };
 		516F03BF19ADFFA600202CAA /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516F03BE19ADFFA600202CAA /* SideMenu.swift */; };
@@ -33,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5102DF2819B0EE91002619BD /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		5102DF2A19B0EE95002619BD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		5110A2A619A7951700CDF0F8 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		515F91A919ACE4FF005151E2 /* BufferGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BufferGame.swift; sourceTree = "<group>"; };
 		516F03BE19ADFFA600202CAA /* SideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
@@ -58,6 +62,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5102DF2B19B0EE95002619BD /* MobileCoreServices.framework in Frameworks */,
+				5102DF2919B0EE91002619BD /* ImageIO.framework in Frameworks */,
 				51FD93AB19AB9DEB00B2A00C /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,6 +81,8 @@
 		51ACE8FF19A39BE7009422C0 = {
 			isa = PBXGroup;
 			children = (
+				5102DF2A19B0EE95002619BD /* MobileCoreServices.framework */,
+				5102DF2819B0EE91002619BD /* ImageIO.framework */,
 				51FD93AA19AB9DEB00B2A00C /* CoreData.framework */,
 				51ACE90A19A39BE7009422C0 /* Grow */,
 				51ACE92019A39BE7009422C0 /* GrowTests */,

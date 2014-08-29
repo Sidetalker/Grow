@@ -86,6 +86,7 @@ class UIBufferSettingsTableViewController: UITableViewController {
 class UIBufferSettingsViewController: UIViewController {
     var gameStates: [[[Cell]]] = [[[Cell]]]()
     var navController = UIBufferSettingsTableViewController()
+    var isGIF: Bool = false
     
     @IBOutlet var containerView: UIView!
     @IBOutlet var progressBar: UIProgressView!
@@ -101,15 +102,38 @@ class UIBufferSettingsViewController: UIViewController {
             return
         }
         
-        self.btnGenerate.enabled = false
-        self.btnExit.enabled = false
+        var options =  UIAlertController(title: "Select display method", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        options.addAction(UIAlertAction(title: "Play in App", style: UIAlertActionStyle.Default, handler: { action in
+            self.generateForDisplay()
+        }))
+        
+        options.addAction(UIAlertAction(title: "Generate GIF", style: UIAlertActionStyle.Default, handler: { action in
+            self.generateForGIF()
+        }))
+        
+        options.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Destructive, handler: { action in
+            return
+        }))
+        
+        self.presentViewController(options, animated: true, completion: { (Void) in
+                return
+            })
+    }
+    
+    func generateForGIF() {
+        isGIF = true
+    }
+    
+    func generateForDisplay() {
+        isGIF = false
         
         UIView.animateWithDuration(1, animations: {
             let curFrame: CGRect = self.containerView.frame
             let newFrame = CGRectMake(0, 0, curFrame.width, curFrame.height - 17)
             self.containerView.frame = newFrame
             self.progressBar.alpha = 1
-            })
+        })
         
         dispatch_async(dispatch_get_main_queue()) {
             self.buildGenerations()

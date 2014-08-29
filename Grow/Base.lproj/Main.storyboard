@@ -769,23 +769,6 @@
             </objects>
             <point key="canvasLocation" x="2796" y="-163"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="lS5-VG-0TO">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="tLL-ap-c86" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vqi-ve-IUu">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ane-sh-SGK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="466.5" y="175"/>
-        </scene>
         <!--Buffer Playback View Controller-->
         <scene sceneID="M3l-BC-Bzo">
             <objects>
