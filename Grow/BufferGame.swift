@@ -98,10 +98,13 @@ class UIBufferSettingsViewController: UIViewController {
         NSLog("btnGenerate fired")
         
         if btnGenerate.titleLabel.text == "Display" {
-//            self.performSegueWithIdentifier("bufferGenerate", sender: self)
-//            return
+            if !isGIF {
+                self.performSegueWithIdentifier("bufferGenerate", sender: self)
+            }
+            else {
+                self.performSegueWithIdentifier("bufferGIF", sender: self)
+            }
             
-            self.performSegueWithIdentifier("bufferGIF", sender: self)
             return
         }
         
@@ -133,6 +136,8 @@ class UIBufferSettingsViewController: UIViewController {
     }
     
     func generateForDisplay() {
+        self.toggleButtons(false)
+        
         UIView.animateWithDuration(1, animations: {
             let curFrame: CGRect = self.containerView.frame
             let newFrame = CGRectMake(0, 0, curFrame.width, curFrame.height - 17)
@@ -179,10 +184,6 @@ class UIBufferSettingsViewController: UIViewController {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height:height), false, 0.0)
         let ctx = UIGraphicsGetCurrentContext();
         
-        let viewRect = CGRectMake(0, 0, width, height)
-        CGContextSetFillColorWithColor(ctx, UIColor.whiteColor().CGColor)
-        CGContextFillRect(ctx, viewRect)
-        
         CGContextSetLineWidth(ctx, 0.5)
         CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
         
@@ -192,25 +193,25 @@ class UIBufferSettingsViewController: UIViewController {
         var curWidth: CGFloat = width / CGFloat(columns)
         var curHeight: CGFloat = height / CGFloat(rows)
         
-        for row in 1...rows {
+        for row in 0...rows {
             CGContextMoveToPoint(ctx, 0.0, CGFloat(row) * curHeight)
-            CGContextAddLineToPoint(ctx, curWidth, CGFloat(row) * curHeight)
+            CGContextAddLineToPoint(ctx, width, CGFloat(row) * curHeight)
             CGContextStrokePath(ctx)
         }
         
-        for col in 1...columns {
+        for col in 0...columns {
             CGContextMoveToPoint(ctx, CGFloat(col) * curWidth, 0.0)
-            CGContextAddLineToPoint(ctx, CGFloat(col) * curWidth, curHeight)
+            CGContextAddLineToPoint(ctx, CGFloat(col) * curWidth, height)
             CGContextStrokePath(ctx)
         }
-        
+
         for x in Range(start: 0, end: rows) {
-            var curYStart: CGFloat = height * CGFloat(x)
+            var curYStart: CGFloat = curHeight * CGFloat(x)
             
             for y in Range(start: 0, end: columns) {
                 if myBoard[x][y].state {
-                    var curXStart: CGFloat = width * CGFloat(y)
-                    var curCell = CGRectMake(curXStart, curYStart, width, height);
+                    var curXStart: CGFloat = curWidth * CGFloat(y)
+                    var curCell = CGRectMake(curXStart, curYStart, curWidth, curHeight);
                     
                     CGContextFillRect(ctx, curCell)
                 }
@@ -218,7 +219,6 @@ class UIBufferSettingsViewController: UIViewController {
         }
         
         let resultImage = UIGraphicsGetImageFromCurrentImageContext()
-        
         UIGraphicsEndImageContext()
         
         return resultImage
@@ -264,7 +264,7 @@ class UIBufferSettingsViewController: UIViewController {
         
         self.progressBar.setProgress(0.0, animated: true)
         
-        UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.CurveEaseIn,
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn,
             animations: {() in
                 let curFrame: CGRect = self.containerView.frame
                 let newFrame = CGRectMake(0, 0, curFrame.width, curFrame.height + 17)
@@ -274,8 +274,7 @@ class UIBufferSettingsViewController: UIViewController {
                 self.btnExit.setTitle("Clear", forState: UIControlState.Normal)
             },
             completion: {(Bool) in
-                self.btnGenerate.enabled = true
-                self.btnExit.enabled = true
+                self.toggleButtons(true)
         })
         
     }
@@ -288,7 +287,9 @@ class UIBufferSettingsViewController: UIViewController {
 
 class UIBufferGIFViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
+    
     var frameArr = []
+    var timer: NSTimer = NSTimer()
     
     override func viewDidLoad() {
         //nothing yet
