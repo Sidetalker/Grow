@@ -176,54 +176,6 @@ class UIBufferSettingsViewController: UIViewController {
         }
     }
     
-    func imageFromBoard(myBoard: [[Cell]], height: CGFloat, width: CGFloat) -> UIImage {
-        if myBoard.count < 1 {
-            return UIImage()
-        }
-        
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height:height), false, 0.0)
-        let ctx = UIGraphicsGetCurrentContext();
-        
-        CGContextSetLineWidth(ctx, 0.5)
-        CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
-        
-        let rows = myBoard.count
-        let columns = myBoard[0].count
-        
-        var curWidth: CGFloat = width / CGFloat(columns)
-        var curHeight: CGFloat = height / CGFloat(rows)
-        
-        for row in 0...rows {
-            CGContextMoveToPoint(ctx, 0.0, CGFloat(row) * curHeight)
-            CGContextAddLineToPoint(ctx, width, CGFloat(row) * curHeight)
-            CGContextStrokePath(ctx)
-        }
-        
-        for col in 0...columns {
-            CGContextMoveToPoint(ctx, CGFloat(col) * curWidth, 0.0)
-            CGContextAddLineToPoint(ctx, CGFloat(col) * curWidth, height)
-            CGContextStrokePath(ctx)
-        }
-
-        for x in Range(start: 0, end: rows) {
-            var curYStart: CGFloat = curHeight * CGFloat(x)
-            
-            for y in Range(start: 0, end: columns) {
-                if myBoard[x][y].state {
-                    var curXStart: CGFloat = curWidth * CGFloat(y)
-                    var curCell = CGRectMake(curXStart, curYStart, curWidth, curHeight);
-                    
-                    CGContextFillRect(ctx, curCell)
-                }
-            }
-        }
-        
-        let resultImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return resultImage
-    }
-    
     func buildGenerations() {
         gameStates = [[[Cell]]]()
         gameFrames = [UIImage]()
@@ -254,7 +206,7 @@ class UIBufferSettingsViewController: UIViewController {
                 gameStates.append(curState.board)
             }
             else {
-                gameFrames.append(self.imageFromBoard(curState.board, height: 200, width: 200))
+                gameFrames.append(curState.getBoardImage(200, width: 200))
             }
             
             self.progressBar.setProgress(Float(i) / Float(frames), animated: true)
@@ -289,14 +241,30 @@ class UIBufferGIFViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
     
     var frameArr = []
-    var timer: NSTimer = NSTimer()
+    var playbackTimer = NSTimer()
+    var curIndex = 0
     
     override func viewDidLoad() {
         //nothing yet
     }
     
     @IBAction func btnLoadOne(sender: AnyObject) {
-        self.imageView.image = frameArr[5] as UIImage
+//        playbackTimer = NSTimer.scheduledTimerWithTimeInterval(1 / 10, target: self, selector: "tick", userInfo: nil, repeats: true)
+        self.makeAnimatedGIF()
+    }
+    
+    func tick() {
+        if curIndex == frameArr.count {
+            curIndex = 0
+        }
+        
+        imageView.image = frameArr[curIndex] as UIImage
+        curIndex++
+    }
+    
+    func makeAnimatedGIF() {
+        imageView.image = UIImage.animatedImageWithImages(frameArr, duration: 5)
+        imageView.startAnimating()
     }
 }
 

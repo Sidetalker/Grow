@@ -158,4 +158,54 @@ class ConwayGame {
         
         delegate?.gameDidEnd(self)
     }
+    
+    func getBoardImage(height: CGFloat, width: CGFloat) -> UIImage {
+        let myBoard = board
+        
+        if myBoard.count < 1 {
+            return UIImage()
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height:height), false, 0.0)
+        let ctx = UIGraphicsGetCurrentContext();
+        
+        CGContextSetLineWidth(ctx, 0.5)
+        CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
+        
+        let rows = myBoard.count
+        let columns = myBoard[0].count
+        
+        var curWidth: CGFloat = width / CGFloat(columns)
+        var curHeight: CGFloat = height / CGFloat(rows)
+        
+        for row in 0...rows {
+            CGContextMoveToPoint(ctx, 0.0, CGFloat(row) * curHeight)
+            CGContextAddLineToPoint(ctx, width, CGFloat(row) * curHeight)
+            CGContextStrokePath(ctx)
+        }
+        
+        for col in 0...columns {
+            CGContextMoveToPoint(ctx, CGFloat(col) * curWidth, 0.0)
+            CGContextAddLineToPoint(ctx, CGFloat(col) * curWidth, height)
+            CGContextStrokePath(ctx)
+        }
+        
+        for x in Range(start: 0, end: rows) {
+            var curYStart: CGFloat = curHeight * CGFloat(x)
+            
+            for y in Range(start: 0, end: columns) {
+                if myBoard[x][y].state {
+                    var curXStart: CGFloat = curWidth * CGFloat(y)
+                    var curCell = CGRectMake(curXStart, curYStart, curWidth, curHeight);
+                    
+                    CGContextFillRect(ctx, curCell)
+                }
+            }
+        }
+        
+        let resultImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return resultImage
+    }
 }
