@@ -192,7 +192,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d8j-Wt-HDs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2796" y="585"/>
+            <point key="canvasLocation" x="2796" y="863"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Lm4-6T-LOJ">
@@ -418,6 +418,7 @@
                         <outlet property="lblMemory" destination="6MI-uZ-DhB" id="tl0-PH-evH"/>
                         <outlet property="progressBar" destination="Vo0-cw-eNJ" id="knL-PX-Wm5"/>
                         <segue destination="Pou-Td-Uud" kind="presentation" identifier="bufferGenerate" id="wOa-Mg-lHn"/>
+                        <segue destination="sTs-Ba-ZP4" kind="presentation" identifier="bufferGIF" id="Czm-2a-Dbc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="89D-2Q-B4e" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -448,6 +449,9 @@
                                                 </label>
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minimumValue="5" maximumValue="100" stepValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="kGX-E1-Ing">
                                                     <rect key="frame" x="-47" y="-14" width="94" height="29"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="138" y="7" width="94" height="29"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="stepRows:" destination="vkn-bU-UpU" eventType="valueChanged" id="146-3f-2R8"/>
                                                     </connections>
@@ -493,6 +497,9 @@
                                             <subviews>
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="25" minimumValue="5" maximumValue="100" stepValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="axz-aT-ay4">
                                                     <rect key="frame" x="-47" y="-14" width="94" height="29"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="138" y="7" width="94" height="29"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="stepColumns:" destination="vkn-bU-UpU" eventType="valueChanged" id="hQa-AR-QF4"/>
                                                     </connections>
@@ -549,6 +556,9 @@
                                                 </label>
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minimumValue="5" maximumValue="100" stepValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="rly-a2-Ljd">
                                                     <rect key="frame" x="-47" y="-14" width="94" height="29"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="138" y="7" width="94" height="29"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="stepPercent:" destination="vkn-bU-UpU" eventType="valueChanged" id="7vP-ex-YDL"/>
                                                     </connections>
@@ -603,6 +613,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6ba-kY-0NV">
                                                     <rect key="frame" x="-25" y="-15" width="51" height="31"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="160" y="6" width="51" height="31"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="toggleAutoBuffer:" destination="vkn-bU-UpU" eventType="valueChanged" id="txF-LJ-Ebr"/>
                                                     </connections>
@@ -648,6 +661,9 @@
                                             <subviews>
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="500" minimumValue="100" maximumValue="1000000" stepValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="EtB-qf-1VI">
                                                     <rect key="frame" x="-47" y="-14" width="94" height="29"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="138" y="8" width="94" height="29"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="stepBufferFrames:" destination="vkn-bU-UpU" eventType="valueChanged" id="xIT-Of-7cH"/>
                                                     </connections>
@@ -698,6 +714,9 @@
                                             <subviews>
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minimumValue="1" maximumValue="120" translatesAutoresizingMaskIntoConstraints="NO" id="6Yg-cg-Dvl">
                                                     <rect key="frame" x="-47" y="-14" width="94" height="29"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="138" y="7" width="94" height="29"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="stepFramerate:" destination="vkn-bU-UpU" eventType="valueChanged" id="ci6-Kx-88y"/>
                                                     </connections>
@@ -767,7 +786,81 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n2i-2j-SVE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2796" y="-163"/>
+            <point key="canvasLocation" x="2796" y="-469"/>
+        </scene>
+        <!--BufferGIF View Controller-->
+        <scene sceneID="6NM-eg-t0e">
+            <objects>
+                <viewController id="sTs-Ba-ZP4" customClass="UIBufferGIFViewController" customModule="Grow" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kds-31-kLs"/>
+                        <viewControllerLayoutGuide type="bottom" id="q4g-xT-H6t"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rb6-1M-Lj0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5Yk-fb-tLL">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tw7-qv-bgm">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Load One">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnLoadOne:" destination="sTs-Ba-ZP4" eventType="touchUpInside" id="Ab8-HR-l95"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kds-31-kLs" firstAttribute="leading" secondItem="5Yk-fb-tLL" secondAttribute="trailing" constant="-400" id="5I0-J6-SDf"/>
+                            <constraint firstItem="q4g-xT-H6t" firstAttribute="top" secondItem="tw7-qv-bgm" secondAttribute="bottom" constant="20" id="CAR-g6-uYR"/>
+                            <constraint firstItem="5Yk-fb-tLL" firstAttribute="top" secondItem="kds-31-kLs" secondAttribute="bottom" id="Cut-0F-Dlf"/>
+                            <constraint firstItem="5Yk-fb-tLL" firstAttribute="leading" secondItem="rb6-1M-Lj0" secondAttribute="leadingMargin" constant="-16" id="GTj-UF-dGm"/>
+                            <constraint firstAttribute="centerX" secondItem="tw7-qv-bgm" secondAttribute="centerX" id="KWP-cE-goQ"/>
+                            <constraint firstItem="tw7-qv-bgm" firstAttribute="top" secondItem="5Yk-fb-tLL" secondAttribute="bottom" constant="24" id="tVq-w6-Odt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5Yk-fb-tLL" secondAttribute="trailing" constant="-16" id="yEA-5P-ESY"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="5Yk-fb-tLL"/>
+                                <exclude reference="tw7-qv-bgm"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="Cut-0F-Dlf"/>
+                                <exclude reference="GTj-UF-dGm"/>
+                                <exclude reference="yEA-5P-ESY"/>
+                                <exclude reference="5I0-J6-SDf"/>
+                                <exclude reference="KWP-cE-goQ"/>
+                                <exclude reference="tVq-w6-Odt"/>
+                                <exclude reference="CAR-g6-uYR"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="5Yk-fb-tLL"/>
+                                <include reference="tw7-qv-bgm"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="Cut-0F-Dlf"/>
+                                <include reference="GTj-UF-dGm"/>
+                                <include reference="yEA-5P-ESY"/>
+                                <include reference="5I0-J6-SDf"/>
+                                <include reference="KWP-cE-goQ"/>
+                                <include reference="tVq-w6-Odt"/>
+                                <include reference="CAR-g6-uYR"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="5Yk-fb-tLL" id="evQ-gQ-G7g"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g5q-ta-ygE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2796" y="186"/>
         </scene>
         <!--Buffer Playback View Controller-->
         <scene sceneID="M3l-BC-Bzo">

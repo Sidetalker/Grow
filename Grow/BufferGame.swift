@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class UIBufferSettingsTableViewController: UITableViewController {
-    
     var rows: Int = 50
     var columns: Int = 25
     var percent: Int = 50
@@ -85,6 +84,7 @@ class UIBufferSettingsTableViewController: UITableViewController {
 
 class UIBufferSettingsViewController: UIViewController {
     var gameStates: [[[Cell]]] = [[[Cell]]]()
+    var gameFrames: [UIImage] = [UIImage]()
     var navController = UIBufferSettingsTableViewController()
     var isGIF: Bool = false
     
@@ -98,9 +98,14 @@ class UIBufferSettingsViewController: UIViewController {
         NSLog("btnGenerate fired")
         
         if btnGenerate.titleLabel.text == "Display" {
-            self.performSegueWithIdentifier("bufferGenerate", sender: self)
+//            self.performSegueWithIdentifier("bufferGenerate", sender: self)
+//            return
+            
+            self.performSegueWithIdentifier("bufferGIF", sender: self)
             return
         }
+        
+        isGIF = false
         
         var options =  UIAlertController(title: "Select display method", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
         
@@ -123,11 +128,11 @@ class UIBufferSettingsViewController: UIViewController {
     
     func generateForGIF() {
         isGIF = true
+        
+        generateForDisplay()
     }
     
     func generateForDisplay() {
-        isGIF = false
-        
         UIView.animateWithDuration(1, animations: {
             let curFrame: CGRect = self.containerView.frame
             let newFrame = CGRectMake(0, 0, curFrame.width, curFrame.height - 17)
@@ -160,10 +165,68 @@ class UIBufferSettingsViewController: UIViewController {
             destController.gameStates = gameStates
             destController.framerate = navController.framerate
         }
+        else if segue.identifier == "bufferGIF" {
+            let destController = segue.destinationViewController as UIBufferGIFViewController
+            destController.frameArr = gameFrames
+        }
+    }
+    
+    func imageFromBoard(myBoard: [[Cell]], height: CGFloat, width: CGFloat) -> UIImage {
+        if myBoard.count < 1 {
+            return UIImage()
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height:height), false, 0.0)
+        let ctx = UIGraphicsGetCurrentContext();
+        
+        let viewRect = CGRectMake(0, 0, width, height)
+        CGContextSetFillColorWithColor(ctx, UIColor.whiteColor().CGColor)
+        CGContextFillRect(ctx, viewRect)
+        
+        CGContextSetLineWidth(ctx, 0.5)
+        CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
+        
+        let rows = myBoard.count
+        let columns = myBoard[0].count
+        
+        var curWidth: CGFloat = width / CGFloat(columns)
+        var curHeight: CGFloat = height / CGFloat(rows)
+        
+        for row in 1...rows {
+            CGContextMoveToPoint(ctx, 0.0, CGFloat(row) * curHeight)
+            CGContextAddLineToPoint(ctx, curWidth, CGFloat(row) * curHeight)
+            CGContextStrokePath(ctx)
+        }
+        
+        for col in 1...columns {
+            CGContextMoveToPoint(ctx, CGFloat(col) * curWidth, 0.0)
+            CGContextAddLineToPoint(ctx, CGFloat(col) * curWidth, curHeight)
+            CGContextStrokePath(ctx)
+        }
+        
+        for x in Range(start: 0, end: rows) {
+            var curYStart: CGFloat = height * CGFloat(x)
+            
+            for y in Range(start: 0, end: columns) {
+                if myBoard[x][y].state {
+                    var curXStart: CGFloat = width * CGFloat(y)
+                    var curCell = CGRectMake(curXStart, curYStart, width, height);
+                    
+                    CGContextFillRect(ctx, curCell)
+                }
+            }
+        }
+        
+        let resultImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        return resultImage
     }
     
     func buildGenerations() {
         gameStates = [[[Cell]]]()
+        gameFrames = [UIImage]()
         
         let rows = navController.rows
         let cols = navController.columns
@@ -187,7 +250,13 @@ class UIBufferSettingsViewController: UIViewController {
                 NSLog("No changes made but buffer break didn't fire")
             }
             
-            gameStates.append(curState.board)
+            if !isGIF {
+                gameStates.append(curState.board)
+            }
+            else {
+                gameFrames.append(self.imageFromBoard(curState.board, height: 200, width: 200))
+            }
+            
             self.progressBar.setProgress(Float(i) / Float(frames), animated: true)
             
             NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeInterval: 0.001, sinceDate: NSDate()))
@@ -214,6 +283,19 @@ class UIBufferSettingsViewController: UIViewController {
     func toggleButtons(onOff: Bool) {
         self.btnExit.enabled = onOff
         self.btnGenerate.enabled = onOff
+    }
+}
+
+class UIBufferGIFViewController: UIViewController {
+    @IBOutlet var imageView: UIImageView!
+    var frameArr = []
+    
+    override func viewDidLoad() {
+        //nothing yet
+    }
+    
+    @IBAction func btnLoadOne(sender: AnyObject) {
+        self.imageView.image = frameArr[5] as UIImage
     }
 }
 
