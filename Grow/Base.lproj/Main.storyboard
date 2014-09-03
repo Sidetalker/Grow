@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.8" systemVersion="14A329f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1Aj-F1-P2s">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.8" systemVersion="14A343f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1Aj-F1-P2s">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -802,6 +802,9 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5Yk-fb-tLL">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="20" width="400" height="506"/>
+                                </variation>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tw7-qv-bgm">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -820,7 +823,6 @@
                             <constraint firstItem="5Yk-fb-tLL" firstAttribute="top" secondItem="kds-31-kLs" secondAttribute="bottom" id="Cut-0F-Dlf"/>
                             <constraint firstItem="5Yk-fb-tLL" firstAttribute="leading" secondItem="rb6-1M-Lj0" secondAttribute="leadingMargin" constant="-16" id="GTj-UF-dGm"/>
                             <constraint firstAttribute="centerX" secondItem="tw7-qv-bgm" secondAttribute="centerX" id="KWP-cE-goQ"/>
-                            <constraint firstItem="tw7-qv-bgm" firstAttribute="top" secondItem="5Yk-fb-tLL" secondAttribute="bottom" constant="24" id="tVq-w6-Odt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5Yk-fb-tLL" secondAttribute="trailing" constant="-16" id="yEA-5P-ESY"/>
                         </constraints>
                         <variation key="default">
@@ -829,12 +831,11 @@
                                 <exclude reference="tw7-qv-bgm"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="KWP-cE-goQ"/>
                                 <exclude reference="Cut-0F-Dlf"/>
                                 <exclude reference="GTj-UF-dGm"/>
                                 <exclude reference="yEA-5P-ESY"/>
                                 <exclude reference="5I0-J6-SDf"/>
-                                <exclude reference="KWP-cE-goQ"/>
-                                <exclude reference="tVq-w6-Odt"/>
                                 <exclude reference="CAR-g6-uYR"/>
                             </mask>
                         </variation>
@@ -844,12 +845,11 @@
                                 <include reference="tw7-qv-bgm"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="KWP-cE-goQ"/>
                                 <include reference="Cut-0F-Dlf"/>
                                 <include reference="GTj-UF-dGm"/>
                                 <include reference="yEA-5P-ESY"/>
                                 <include reference="5I0-J6-SDf"/>
-                                <include reference="KWP-cE-goQ"/>
-                                <include reference="tVq-w6-Odt"/>
                                 <include reference="CAR-g6-uYR"/>
                             </mask>
                         </variation>

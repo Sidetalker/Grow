@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import ImageIO
 import UIKit
+import MobileCoreServices
 
 class UIBufferSettingsTableViewController: UITableViewController {
     var rows: Int = 50
@@ -237,7 +239,7 @@ class UIBufferSettingsViewController: UIViewController {
     }
 }
 
-class UIBufferGIFViewController: UIViewController {
+class UIBufferGIFViewController: UIViewController  {
     @IBOutlet var imageView: UIImageView!
     
     var frameArr = []
@@ -245,7 +247,12 @@ class UIBufferGIFViewController: UIViewController {
     var curIndex = 0
     
     override func viewDidLoad() {
-        //nothing yet
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        let rangeSlider = SAVideoRangeSlider(frame: CGRectMake(10, 200, self.view.frame.size.width - 20, 70), gifArray: frameArr)
+        
+        self.view.addSubview(rangeSlider)
     }
     
     @IBAction func btnLoadOne(sender: AnyObject) {
@@ -263,8 +270,31 @@ class UIBufferGIFViewController: UIViewController {
     }
     
     func makeAnimatedGIF() {
-        imageView.image = UIImage.animatedImageWithImages(frameArr, duration: 5)
+        let gifImage = UIImage.animatedImageWithImages(frameArr, duration: 10)
+        let gifData = UIImagePNGRepresentation(gifImage)
+        
+        imageView.image = gifImage
+        
+        saveGif()
+        
         imageView.startAnimating()
+    }
+    
+    func saveGif() {
+        let gifPath = "\(NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)[0])/gifs/testy.gif"
+        let destination = CGImageDestinationCreateWithURL(NSURL.fileURLWithPath(gifPath), kUTTypeGIF, UInt(frameArr.count), nil)
+        
+        println(gifPath)
+        
+        let frameProperties = NSDictionary.dictionaryWithObjects([NSDictionary.dictionaryWithObjects([frameArr.count], forKeys: [kCGImagePropertyGIFDelayTime], count: 0)], forKeys: [kCGImagePropertyGIFDictionary], count: 1)
+        let gifProperties = NSDictionary.dictionaryWithObjects([NSDictionary.dictionaryWithObjects([NSNumber.numberWithInt(0)], forKeys: [kCGImagePropertyGIFLoopCount], count: 1)], forKeys: [kCGImagePropertyGIFDictionary], count: 1)
+        
+        for pic in frameArr {
+            CGImageDestinationAddImage(destination, pic.CGImage, frameProperties)
+        }
+        
+        CGImageDestinationSetProperties(destination, gifProperties)
+        CGImageDestinationFinalize(destination)
     }
 }
 

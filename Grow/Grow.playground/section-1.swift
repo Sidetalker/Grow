@@ -82,3 +82,6 @@ var test = [[Bool]](count: 2, repeatedValue: [Bool](count: 4, repeatedValue: Boo
 test[0][1] = true
 test
 
+let frames = [4,5,6,7,8]
+let framesMute = frames as NSMutableArray
+

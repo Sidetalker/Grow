@@ -14,6 +14,13 @@
 		516F03BF19ADFFA600202CAA /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516F03BE19ADFFA600202CAA /* SideMenu.swift */; };
 		516F03C119AE10FC00202CAA /* SideMain.xib in Resources */ = {isa = PBXBuildFile; fileRef = 516F03C019AE10FC00202CAA /* SideMain.xib */; };
 		516F03C319AE110800202CAA /* SideMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 516F03C219AE110800202CAA /* SideMenu.xib */; };
+		517AC66B19B66F54001E5434 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 517AC66A19B66F54001E5434 /* QuartzCore.framework */; };
+		517AC66D19B66F5A001E5434 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 517AC66C19B66F5A001E5434 /* AVFoundation.framework */; };
+		517AC66F19B66F6B001E5434 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 517AC66E19B66F6B001E5434 /* CoreMedia.framework */; };
+		517AC67919B68FBE001E5434 /* SAResizibleBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 517AC67219B68FBE001E5434 /* SAResizibleBubble.m */; };
+		517AC67A19B68FBE001E5434 /* SASliderLeft.m in Sources */ = {isa = PBXBuildFile; fileRef = 517AC67419B68FBE001E5434 /* SASliderLeft.m */; };
+		517AC67B19B68FBE001E5434 /* SASliderRight.m in Sources */ = {isa = PBXBuildFile; fileRef = 517AC67619B68FBE001E5434 /* SASliderRight.m */; };
+		517AC67C19B68FBE001E5434 /* SAVideoRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 517AC67819B68FBE001E5434 /* SAVideoRangeSlider.m */; };
 		51ACE90E19A39BE7009422C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ACE90D19A39BE7009422C0 /* AppDelegate.swift */; };
 		51ACE91119A39BE7009422C0 /* Grow.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 51ACE90F19A39BE7009422C0 /* Grow.xcdatamodeld */; };
 		51ACE91319A39BE7009422C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ACE91219A39BE7009422C0 /* ViewController.swift */; };
@@ -42,6 +49,18 @@
 		516F03BE19ADFFA600202CAA /* SideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		516F03C019AE10FC00202CAA /* SideMain.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideMain.xib; sourceTree = "<group>"; };
 		516F03C219AE110800202CAA /* SideMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideMenu.xib; sourceTree = "<group>"; };
+		517AC65A19B66EEF001E5434 /* Grow-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Grow-Bridging-Header.h"; sourceTree = "<group>"; };
+		517AC66A19B66F54001E5434 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		517AC66C19B66F5A001E5434 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		517AC66E19B66F6B001E5434 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		517AC67119B68FBE001E5434 /* SAResizibleBubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAResizibleBubble.h; sourceTree = "<group>"; };
+		517AC67219B68FBE001E5434 /* SAResizibleBubble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAResizibleBubble.m; sourceTree = "<group>"; };
+		517AC67319B68FBE001E5434 /* SASliderLeft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASliderLeft.h; sourceTree = "<group>"; };
+		517AC67419B68FBE001E5434 /* SASliderLeft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SASliderLeft.m; sourceTree = "<group>"; };
+		517AC67519B68FBE001E5434 /* SASliderRight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASliderRight.h; sourceTree = "<group>"; };
+		517AC67619B68FBE001E5434 /* SASliderRight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SASliderRight.m; sourceTree = "<group>"; };
+		517AC67719B68FBE001E5434 /* SAVideoRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAVideoRangeSlider.h; sourceTree = "<group>"; };
+		517AC67819B68FBE001E5434 /* SAVideoRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAVideoRangeSlider.m; sourceTree = "<group>"; };
 		51ACE90819A39BE7009422C0 /* Grow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51ACE90C19A39BE7009422C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51ACE90D19A39BE7009422C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +81,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				517AC66F19B66F6B001E5434 /* CoreMedia.framework in Frameworks */,
+				517AC66D19B66F5A001E5434 /* AVFoundation.framework in Frameworks */,
+				517AC66B19B66F54001E5434 /* QuartzCore.framework in Frameworks */,
 				5102DF2B19B0EE95002619BD /* MobileCoreServices.framework in Frameworks */,
 				5102DF2919B0EE91002619BD /* ImageIO.framework in Frameworks */,
 				51FD93AB19AB9DEB00B2A00C /* CoreData.framework in Frameworks */,
@@ -78,9 +100,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		517AC67019B68FBE001E5434 /* SAVideoRangeSlider */ = {
+			isa = PBXGroup;
+			children = (
+				517AC67119B68FBE001E5434 /* SAResizibleBubble.h */,
+				517AC67219B68FBE001E5434 /* SAResizibleBubble.m */,
+				517AC67319B68FBE001E5434 /* SASliderLeft.h */,
+				517AC67419B68FBE001E5434 /* SASliderLeft.m */,
+				517AC67519B68FBE001E5434 /* SASliderRight.h */,
+				517AC67619B68FBE001E5434 /* SASliderRight.m */,
+				517AC67719B68FBE001E5434 /* SAVideoRangeSlider.h */,
+				517AC67819B68FBE001E5434 /* SAVideoRangeSlider.m */,
+			);
+			name = SAVideoRangeSlider;
+			path = ../../Libraries/SAVideoRangeSlider/SAVideoRangeSlider;
+			sourceTree = "<group>";
+		};
 		51ACE8FF19A39BE7009422C0 = {
 			isa = PBXGroup;
 			children = (
+				517AC67019B68FBE001E5434 /* SAVideoRangeSlider */,
+				517AC66E19B66F6B001E5434 /* CoreMedia.framework */,
+				517AC66C19B66F5A001E5434 /* AVFoundation.framework */,
+				517AC66A19B66F54001E5434 /* QuartzCore.framework */,
 				5102DF2A19B0EE95002619BD /* MobileCoreServices.framework */,
 				5102DF2819B0EE91002619BD /* ImageIO.framework */,
 				51FD93AA19AB9DEB00B2A00C /* CoreData.framework */,
@@ -115,6 +157,7 @@
 				51ACE91719A39BE7009422C0 /* Images.xcassets */,
 				51ACE90F19A39BE7009422C0 /* Grow.xcdatamodeld */,
 				51ACE90B19A39BE7009422C0 /* Supporting Files */,
+				517AC65A19B66EEF001E5434 /* Grow-Bridging-Header.h */,
 			);
 			path = Grow;
 			sourceTree = "<group>";
@@ -245,13 +288,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				517AC67C19B68FBE001E5434 /* SAVideoRangeSlider.m in Sources */,
 				51ACE91319A39BE7009422C0 /* ViewController.swift in Sources */,
 				5110A2A719A7951700CDF0F8 /* MainView.swift in Sources */,
+				517AC67A19B68FBE001E5434 /* SASliderLeft.m in Sources */,
 				51ACE91119A39BE7009422C0 /* Grow.xcdatamodeld in Sources */,
 				516F03BF19ADFFA600202CAA /* SideMenu.swift in Sources */,
+				517AC67B19B68FBE001E5434 /* SASliderRight.m in Sources */,
 				51FD93A719AB93D300B2A00C /* ConwayGame.swift in Sources */,
 				51ACE90E19A39BE7009422C0 /* AppDelegate.swift in Sources */,
 				515F91AA19ACE4FF005151E2 /* BufferGame.swift in Sources */,
+				517AC67919B68FBE001E5434 /* SAResizibleBubble.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,9 +416,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Grow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Grow/Grow-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -381,9 +431,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Grow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Grow/Grow-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

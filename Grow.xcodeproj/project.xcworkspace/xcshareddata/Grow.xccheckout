@@ -10,6 +10,8 @@
 	<string>Grow</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>257CCCD5A6440AFA8B7E4B8541F77029CDCCA47F</key>
+		<string>https://github.com/Sidetalker/SAVideoRangeSlider.git</string>
 		<key>584E8422F4936A68B4E74F04FC70000AAB9CFAAA</key>
 		<string>https://github.com/Sidetalker/Grow.git</string>
 	</dict>
@@ -17,6 +19,8 @@
 	<string>Grow.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>257CCCD5A6440AFA8B7E4B8541F77029CDCCA47F</key>
+		<string>../../../../Libraries/SAVideoRangeSlider</string>
 		<key>584E8422F4936A68B4E74F04FC70000AAB9CFAAA</key>
 		<string>../..</string>
 	</dict>
@@ -35,6 +39,14 @@
 			<string>584E8422F4936A68B4E74F04FC70000AAB9CFAAA</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Grow</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>257CCCD5A6440AFA8B7E4B8541F77029CDCCA47F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SAVideoRangeSlider</string>
 		</dict>
 	</array>
 </dict>
