@@ -1,87 +1,46 @@
 // Playground - noun: a place where people can play
 
 import UIKit
-import Darwin
 
-println("Hello World")
+let rows = 36
+let cols = 25
 
-let constantDouble: Double = 4.0
+let index = 21
 
-let label = "The number is: "
-let universe = 42
-let universeLabel = label + String(universe)
+let realX = index / rows
+let realY = index % cols
 
-let apples = 5
-let oranges = 3
-let appleString = "I have \(apples) apples"
-let fruitString = "I have \(apples + oranges) fruits"
+var neighbors = []
 
-var shoppingList = ["catfish", "water", "tulips", "blue paint"]
-shoppingList[1] = "bottle of water"
-
-var occupations =
-[
-    "Malcolm": "Captain",
-    "Kaylee": "Mechanic",
-]
-occupations["Jayne"] = "Public Relations"
-
-occupations
-
-let emptyArray = [String]()
-let emptyDict = [String:Float]()
-let emptyArrayInferred = []
-let emptyDictInferred = [:]
-
-var individualScores = [75, 43, 103, 87, 12]
-var teamScore = 0
-for score in individualScores {
-    if score > 50 {
-        teamScore += 3
-    } else {
-        teamScore += 1
+for x in -1...1 {
+    for y in -1...1 {
+        var curNeighborX = realX + x
+        var curNeighborY = realY + y
+        
+        if curNeighborX < 0 {
+            curNeighborX = cols - 1
+        }
+        else if curNeighborX == cols {
+            curNeighborX = e
+        }
+        
+        if curNeighborY < 0 {
+            curNeighborY = rows - 1
+        }
+        else if curNeighborY == rows {
+            curNeighborY = 0
+        }
     }
 }
 
-malloc_size(individualScores)
-malloc_size(individualScores)
+let newIndex = realX * cols + realY % rows
+
+let testByte: Byte = 0x011011
+testByte << 1
+
+var newTest = [Byte]()
+newTest.append(testByte)
 
 
-var optionalString: String? = "Hello"
-optionalString == nil
 
-var optionalName: String? = nil
-optionalName = "Kevin"
-var greeting = "Hello!"
-if let name = optionalName {
-    greeting = "Hello, \(name)"
-    println(greeting)
-}
-else {
-    greeting = "This is sorta confusing to me... I think I got it"
-    println(greeting)
-}
-
-let vegetable = "red"
-var vegetableComment = "Nothing"
-
-switch vegetable {
-case "celery":
-    vegetableComment = "Add some raisins and make ants on a log."
-case "cucumber", "watercress":
-    vegetableComment = "That would make a good tea sandwich."
-case let x where x.hasSuffix("pepper"):
-    vegetableComment = "Is it a spicy \(x)?"
-default:
-    vegetableComment = "Everything tastes good in soup."
-}
-
-println(vegetableComment)
-
-var test = [[Bool]](count: 2, repeatedValue: [Bool](count: 4, repeatedValue: Bool()))
-test[0][1] = true
-test
-
-let frames = [4,5,6,7,8]
-let framesMute = frames as NSMutableArray
 

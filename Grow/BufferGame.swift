@@ -73,7 +73,6 @@ class UIBufferSettingsTableViewController: UITableViewController {
 }
 
 class UIBufferSettingsViewController: UIViewController {
-    var gameStates: [[[Cell]]] = [[[Cell]]]()
     var gameFrames: [UIImage] = [UIImage]()
     var navController = UIBufferSettingsTableViewController()
     let myLoadView = UILoadView()
@@ -96,13 +95,8 @@ class UIBufferSettingsViewController: UIViewController {
     
     @IBAction func btnGenerate(sender: AnyObject) {
         if btnGenerate.titleLabel?.text? == "Display" {
-            if !isGIF {
-                self.performSegueWithIdentifier("bufferGenerate", sender: self)
-            }
-            else {
-                self.performSegueWithIdentifier("bufferGIF", sender: self)
-            }
-            
+            self.performSegueWithIdentifier("bufferGIF", sender: self)
+
             return
         }
         
@@ -112,10 +106,6 @@ class UIBufferSettingsViewController: UIViewController {
         
         options.addAction(UIAlertAction(title: "Test Something!", style: UIAlertActionStyle.Default, handler: { action in
             self.runTest()
-        }))
-        
-        options.addAction(UIAlertAction(title: "Play in App", style: UIAlertActionStyle.Default, handler: { action in
-            self.generateForDisplay()
         }))
         
         options.addAction(UIAlertAction(title: "Generate GIF", style: UIAlertActionStyle.Default, handler: { action in
@@ -174,8 +164,6 @@ class UIBufferSettingsViewController: UIViewController {
     }
     
     func generateForGIF() {
-        isGIF = true
-        
         generateForDisplay()
     }
     
@@ -209,7 +197,6 @@ class UIBufferSettingsViewController: UIViewController {
             self.dismissViewControllerAnimated(true, completion: {})
         }
         else {
-            self.gameStates = [[[Cell]]]()
             self.btnExit.setTitle("Exit", forState: UIControlState.Normal)
             self.btnGenerate.setTitle("Generate", forState: UIControlState.Normal)
         }
@@ -219,11 +206,6 @@ class UIBufferSettingsViewController: UIViewController {
         if segue.identifier == "bufferSettingsEmbeded" {
             self.navController = segue.destinationViewController as UIBufferSettingsTableViewController
         }
-        else if segue.identifier == "bufferGenerate" {
-            let destController = segue.destinationViewController as UIBufferViewController
-            destController.gameStates = gameStates
-            destController.framerate = navController.framerate
-        }
         else if segue.identifier == "bufferGIF" {
             let destController = segue.destinationViewController as UIBufferGIFViewController
             destController.frameArr = gameFrames
@@ -231,7 +213,6 @@ class UIBufferSettingsViewController: UIViewController {
     }
     
     func buildGenerations() {
-        gameStates = [[[Cell]]]()
         gameFrames = [UIImage]()
         
         let rows = navController.rows
@@ -241,24 +222,12 @@ class UIBufferSettingsViewController: UIViewController {
         
         var curState: ConwayGame = ConwayGame(rows: rows, cols: cols)
         
-        curState.populateBoard(Double(percent))
+        curState.populateBoardRand(Double(percent))
         
-        gameStates.append(curState.board)
         self.myLoadView.start()
         
         for i in 0...frames - 1 {
-            let changesMade = curState.updateGame()
-            
-            if navController.toggleAutoBuffer.on && !changesMade {
-                break
-            }
-            
-            if !isGIF {
-                gameStates.append(curState.board)
-            }
-            else {
-                gameFrames.append(curState.getBoardImage(self.view.frame.width, width: self.view.frame.width))
-            }
+            gameFrames.append(curState.getBoardImage(self.view.frame.width, width: self.view.frame.width))
             
             // Old generation animation logic
 //            self.progressBar.setProgress(Float(i) / Float(frames), animated: true)
@@ -307,6 +276,7 @@ class UILoadView: UIView {
     override func drawRect(rect: CGRect) {
         // General Declarations
         let ctx = UIGraphicsGetCurrentContext()
+        
         
         // Shadow Declarations
         let shadow = UIColor.blackColor().colorWithAlphaComponent(0.7)
@@ -466,179 +436,5 @@ class UIBufferGIFViewController: UIViewController, SAVideoRangeSliderDelegate {
         
         CGImageDestinationSetProperties(destination, gifProperties)
         CGImageDestinationFinalize(destination)
-    }
-}
-
-class UIBufferViewController: UIViewController {
-    var playbackVC: UIBufferPlaybackViewController?
-    var gameStates: [[[Cell]]] = [[[Cell]]]()
-    var framerate = 0
-    
-    @IBOutlet var lblFPS: UILabel!
-    @IBOutlet var lblFrame: UILabel!
-    @IBOutlet var lblSquares: UILabel!
-    @IBOutlet var btnStart: UIButton!
-    
-    @IBAction func btnStartPressed(sender: AnyObject) {
-        if self.btnStart.titleLabel?.text? == "Start" {
-            self.btnStart.setTitle("Stop", forState: UIControlState.Normal)
-            playbackVC?.startPlayback()
-        }
-        else {
-            self.btnStart.setTitle("Start", forState: UIControlState.Normal)
-            playbackVC?.stopPlayback()
-        }
-    }
-    
-    @IBAction func btnDismissPressed(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: {})
-    }
-    
-    override func viewDidLoad() {
-        NSLog("UIBufferViewController frame height: \(self.view.frame.size.height)")
-    }
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        if segue.identifier == "bufferPlaybackEmbedded" {
-            let destController = segue.destinationViewController as UIBufferPlaybackViewController
-            destController.gameStates = gameStates
-            destController.framerate = framerate
-            destController.mainVC = self
-            self.playbackVC = destController
-        }
-    }
-}
-
-class UIBufferPlaybackViewController: UIViewController {
-    var mainVC: UIBufferViewController?
-    var bufferPlaybackView: UIBufferPlaybackView = UIBufferPlaybackView()
-    var framerate = 0
-    var gameStates: [[[Cell]]] = [[[Cell]]]()
-
-    override func viewDidLoad() {
-        if mainVC == nil {
-            NSLog("mainVC is nil in UIBufferPlaybackViewController")
-        }
-        
-        self.mainVC?.lblFPS.text = "FPS: \(framerate)"
-        self.bufferPlaybackView.gameStates = gameStates
-        self.bufferPlaybackView.framerate = framerate
-        self.bufferPlaybackView.mainVC = mainVC
-        self.bufferPlaybackView.backgroundColor = UIColor.whiteColor()
-        self.view = self.bufferPlaybackView
-    }
-    
-    func startPlayback() {
-        bufferPlaybackView.playbackTimer = NSTimer.scheduledTimerWithTimeInterval(1 / Double(framerate), target: bufferPlaybackView, selector: "tick", userInfo: nil, repeats: true)
-    }
-    
-    func stopPlayback() {
-        bufferPlaybackView.playbackTimer.invalidate()
-    }
-}
-
-class UIBufferPlaybackView: UIView {
-    var mainVC: UIBufferViewController? 
-    var gameStates: [[[Cell]]] = [[[Cell]]]()
-    var framerate = 0
-    var curIndex = 0
-    var lastTime = NSDate()
-    var playbackTimer = NSTimer()
-    
-    override func drawRect(rect: CGRect) {
-        NSLog("UIBufferPlaybackView rect height: \(rect.size.height)")
-        
-        drawGrid(rect)
-    }
-    
-    func tick() {
-        curIndex++
-        self.setNeedsDisplay()
-    }
-    
-    func gridTest(rect: CGRect) {
-        let ctx = UIGraphicsGetCurrentContext()
-        CGContextSetLineWidth(ctx, 0.5)
-        CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
-        
-        var columns = 10
-        var rows = 20
-        
-        var width: CGFloat = rect.size.width / CGFloat(columns)
-        var height: CGFloat = rect.size.height / CGFloat(rows)
-        
-        for row in 1...rows {
-            CGContextMoveToPoint(ctx, 0.0, CGFloat(row) * height)
-            CGContextAddLineToPoint(ctx, rect.size.width, CGFloat(row) * height)
-            CGContextStrokePath(ctx)
-        }
-        
-        for col in 1...columns {
-            CGContextMoveToPoint(ctx, CGFloat(col) * width, 0.0)
-            CGContextAddLineToPoint(ctx, CGFloat(col) * width, rect.size.height)
-            CGContextStrokePath(ctx)
-        }
-    }
-    
-    func drawGrid(rect: CGRect) {
-        if curIndex >= gameStates.count {
-            playbackTimer.invalidate()
-            curIndex--
-        }
-        
-        let ctx = UIGraphicsGetCurrentContext()
-        CGContextSetLineWidth(ctx, 0.5)
-        CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
-        
-        let thisTime = NSDate()
-        let FPSText = NSString(format: "%.2f", 1 / thisTime.timeIntervalSinceDate(lastTime))
-        
-        mainVC?.lblFPS.text = "FPS: " + FPSText
-        mainVC?.lblFrame.text = "Frame: \(curIndex + 1)/\(gameStates.count)"
-        lastTime = thisTime
-    
-        let curBoard = gameStates[curIndex]
-        
-        var rows = curBoard.count
-        var columns = curBoard[0].count
-        
-        var width: CGFloat = rect.size.width / CGFloat(columns)
-        var height: CGFloat = rect.size.height / CGFloat(rows)
-        
-        var rectCount = 0
-        
-        // Draw the grid
-        for row in 1...rows {
-            CGContextMoveToPoint(ctx, 0.0, CGFloat(row) * height)
-            CGContextAddLineToPoint(ctx, rect.size.width, CGFloat(row) * height)
-            CGContextStrokePath(ctx)
-        }
-        
-        for col in 1...columns {
-            CGContextMoveToPoint(ctx, CGFloat(col) * width, 0.0)
-            CGContextAddLineToPoint(ctx, CGFloat(col) * width, rect.size.height)
-            CGContextStrokePath(ctx)
-        }
-        
-        for x in Range(start: 0, end: rows) {
-            var curYStart: CGFloat = height * CGFloat(x)
-            
-            for y in Range(start: 0, end: columns) {
-                if curBoard[x][y].state {
-                    var curXStart: CGFloat = width * CGFloat(y)
-                    var curCell = CGRectMake(curXStart, curYStart, width, height);
-                    
-                    CGContextFillRect(ctx, curCell)
-                    rectCount++
-                }
-            }
-        }
-        
-        curIndex++
-        mainVC?.lblSquares.text = "Squares: \(rectCount)"
     }
 }

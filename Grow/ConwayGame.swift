@@ -10,17 +10,6 @@ import Foundation
 import UIKit
 import ImageIO
 
-struct Coord {
-    var x: Int
-    var y: Int
-}
-
-struct Cell {
-    var neighbors: Int
-    var state: Bool
-    var changed: Bool
-}
-
 protocol ConwayGameDelegate {
     func gameDidStart(game: ConwayGame)
     func gameDidUpdate(game: ConwayGame)
@@ -28,154 +17,119 @@ protocol ConwayGameDelegate {
 }
 
 class ConwayGame {
-    var stateTracker = [Coord]()
-    var board = [[Cell]]()
-    var updater: NSTimer = NSTimer()
+    var evenGenCells = [Int8]()
+    var oddGenCells = [Int8]()
+    var curGen = 0
     var rows = 0
     var cols = 0
-    var fps: Double = 1/60.0
 
     var delegate: ConwayGameDelegate?
 
     init (rows: Int, cols: Int) {
-        self.board = [[Cell]](count: rows, repeatedValue: [Cell](count: cols, repeatedValue: Cell(neighbors: 0, state: false, changed: true)))
         self.rows = rows
         self.cols = cols
+        self.evenGenCells = [Int8](count: rows * cols, repeatedValue: 0)
+        self.oddGenCells = [Int8](count: rows * cols, repeatedValue: 0)
     }
-
-    func populateBoard (percent: Double) {
-        for x in Range(start: 0, end: rows) {
-            for y in Range(start: 0, end: cols) {
-                var curRand = arc4random_uniform(100) + 1
-
-                if Double(curRand) < percent {
-                    toggleCell(x, yLoc: y, board: &board)
-                }
-            }
-        }
-    }
-
-    func toggleCell(xLoc: Int, yLoc: Int, inout board: [[Cell]]) {
-        let original = board[xLoc][yLoc].state
-
-        board[xLoc][yLoc].state = !board[xLoc][yLoc].state
-
+    
+    func getNeighborArray(index: NSInteger) -> [NSInteger] {
+        let realX = index / rows
+        let realY = index / cols
+        var neighborArray = [NSInteger]()
+        
         for x in -1...1 {
             for y in -1...1 {
-                if (xLoc + x) < 0 || (xLoc + x) >= rows || (yLoc + y) < 0 || (yLoc + y) >= cols {
-                    continue
+                var curNeighborX = realX + x
+                var curNeighborY = realY + y
+                
+                if curNeighborX < 0 {
+                    curNeighborX = cols - 1
                 }
-
-                if x == 0 && y == 0 {
-                    continue
+                else if curNeighborX == cols {
+                    curNeighborX = 0
                 }
-
-                let startingNeighbors = board[x + xLoc][y + yLoc].neighbors
-                let startingState = board[x + xLoc][y + yLoc].state
-
-                if original {
-                    board[x + xLoc][y + yLoc].neighbors--
+                
+                if curNeighborY < 0 {
+                    curNeighborY = rows - 1
                 }
-                else {
-                    board[x + xLoc][y + yLoc].neighbors++
+                else if curNeighborY == rows {
+                    curNeighborY = 0
                 }
-
-                if startingState {
-                    if board[x + xLoc][y + yLoc].neighbors < 2 || board[x + xLoc][y + yLoc].neighbors > 3 {
-                        board[x + xLoc][y + yLoc].changed = true
-                    }
-                }
-                else {
-                    if board[x + xLoc][y + yLoc].neighbors == 3
-                    {
-                        board[x + xLoc][y + yLoc].changed = true
-                    }
-                }
+                
+                neighborArray.append(curNeighborX * cols + curNeighborY % rows)
             }
         }
+        
+        return neighborArray
     }
 
-    func clearBoard() {
-        self.board = [[Cell]](count: rows, repeatedValue: [Cell](count: cols, repeatedValue: Cell(neighbors: 0, state: false, changed: true)))
+    func populateBoardRand(percent: Double) {
+        for i in Range(start:0, end: rows * cols) {
+            var curRand = arc4random_uniform(100) + 1
+            
+            if Double(curRand) < percent {
+                self.evenGenCells[i] = -1 as Int8
+            }
+        }
     }
 
     func startGame() {
         delegate?.gameDidStart(self)
-
-        updater = NSTimer.scheduledTimerWithTimeInterval(fps, target: self, selector: Selector("updateGame"), userInfo: nil, repeats: true)
+    }
+    
+    func stopGame() {
+        delegate?.gameDidEnd(self)
     }
 
-    func updateGame() -> Bool {
+    func updateGame() {
         delegate?.gameDidUpdate(self)
-
-        //        NSLog("Game Update Calculation Begin")
-
-        //        Any live cell with fewer than two live neighbours dies, as if caused by under-population.
-        //        Any live cell with two or three live neighbours lives on to the next generation.
-        //        Any live cell with more than three live neighbours dies, as if by overcrowding.
-        //        Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-
-        var newBoard: [[Cell]] = board
-        var allDead = true
-        var updated = false
-
-        for x in Range(start: 0, end: rows) {
-            for y in Range(start: 0, end: cols) {
-                if !board[x][y].changed {
-                    continue
-                }
-
-                var neighborCount = board[x][y].neighbors
-
-                if board[x][y].state == true {
-                    allDead = false
-
-                    if neighborCount < 2 || neighborCount > 3 {
-                        toggleCell(x, yLoc: y, board: &newBoard)
-                        updated = true
-                    }
+        
+        for i in Range(start: 0, end: rows*cols) {
+            if curGen % 2 == 0 {
+                if evenGenCells[i] < 0 {
+                    oddGenCells[i] = 0x30 as Int8
                 }
                 else {
-                    if neighborCount == 3 {
-                        toggleCell(x, yLoc: y, board: &newBoard)
-                        updated = true
+                    oddGenCells[i] = 0x10 as Int8
+                }
+            }
+            else {
+                if oddGenCells[i] < 0 {
+                    evenGenCells[i] = 0x30 as Int8
+                }
+                else {
+                    evenGenCells[i] = 0x10 as Int8
+                }
+            }
+        }
+        
+        for i in Range(start: 0, end: rows*cols) {
+            if evenGenCells[i] < 0 {
+                for neighbor in self.getNeighborArray(i) {
+                    if curGen % 2 == 0 {
+                        oddGenCells[neighbor] <<= 1
+                    }
+                    else {
+                        evenGenCells[neighbor] <<= 1
                     }
                 }
             }
         }
-
-        if allDead {
-            updater.invalidate()
-        }
-
-        board = newBoard
-
-        return updated
     }
-
-    func stopGame() {
-        updater.invalidate()
-
-        delegate?.gameDidEnd(self)
+    
+    func clearBoard() {
+        self.evenGenCells = [Int8](count: rows * cols, repeatedValue: 0)
+        self.oddGenCells = [Int8](count: rows * cols, repeatedValue: 0)
     }
 
     func getBoardImage(height: CGFloat, width: CGFloat) -> UIImage {
-        let myBoard = board
-
-        if myBoard.count < 1 {
-            return UIImage()
-        }
-
         UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height:height), false, 0.0)
         let ctx = UIGraphicsGetCurrentContext();
 
         CGContextSetLineWidth(ctx, 0.5)
         CGContextSetFillColorWithColor(ctx, UIColor.blackColor().CGColor)
 
-        let rows = myBoard.count
-        let columns = myBoard[0].count
-
-        var curWidth: CGFloat = width / CGFloat(columns)
+        var curWidth: CGFloat = width / CGFloat(cols)
         var curHeight: CGFloat = height / CGFloat(rows)
 
         for row in 0...rows {
@@ -184,20 +138,25 @@ class ConwayGame {
             CGContextStrokePath(ctx)
         }
 
-        for col in 0...columns {
+        for col in 0...cols {
             CGContextMoveToPoint(ctx, CGFloat(col) * curWidth, 0.0)
             CGContextAddLineToPoint(ctx, CGFloat(col) * curWidth, height)
             CGContextStrokePath(ctx)
         }
-
-        for x in Range(start: 0, end: rows) {
-            var curYStart: CGFloat = curHeight * CGFloat(x)
-
-            for y in Range(start: 0, end: columns) {
-                if myBoard[x][y].state {
-                    var curXStart: CGFloat = curWidth * CGFloat(y)
-                    var curCell = CGRectMake(curXStart, curYStart, curWidth, curHeight);
-
+        
+        for i in Range(start: 0, end: evenGenCells.count) {
+            let gridX = i / rows
+            let gridY = i % cols
+            
+            if curGen % 2 == 0 {
+                if evenGenCells[i] < 0 {
+                    let curCell = CGRectMake(curWidth * CGFloat(gridX), curHeight * CGFloat(gridY), curWidth, curHeight)
+                    CGContextFillRect(ctx, curCell)
+                }
+            }
+            else {
+                if oddGenCells[i] < 0 {
+                    let curCell = CGRectMake(curWidth * CGFloat(gridX), curHeight * CGFloat(gridY), curWidth, curHeight)
                     CGContextFillRect(ctx, curCell)
                 }
             }
