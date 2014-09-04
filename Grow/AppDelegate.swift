@@ -9,6 +9,24 @@
 import UIKit
 import CoreData
 
+extension UIView {
+    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle = NSBundle.mainBundle()) -> UIView! {
+        return UINib(nibName: nibNamed, bundle: bundle).instantiateWithOwner(nil, options: nil)[0] as? UIView
+    }
+}
+
+func == <T:Equatable, T2:Equatable> (lhs: (T,T2), rhs: (T,T2)) -> Bool {
+    return lhs.0 == rhs.0 &&
+        lhs.1 == rhs.1
+}
+
+extension Array {
+    func contains<T:Equatable>(obj: T) -> Bool {
+        let filtered = self.filter {$0 as? T == obj}
+        return filtered.count > 0
+    }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
                             
@@ -55,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         let modelURL = NSBundle.mainBundle().URLForResource("Grow", withExtension: "momd")
-        return NSManagedObjectModel(contentsOfURL: modelURL)
+        return NSManagedObjectModel(contentsOfURL: modelURL!)
     }()
 
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {

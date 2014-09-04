@@ -76,7 +76,9 @@ class UIBufferSettingsViewController: UIViewController {
     var gameStates: [[[Cell]]] = [[[Cell]]]()
     var gameFrames: [UIImage] = [UIImage]()
     var navController = UIBufferSettingsTableViewController()
+    let myLoadView = UILoadView()
     var isGIF: Bool = false
+    var isPulse = false
     
     @IBOutlet var containerView: UIView!
     @IBOutlet var progressBar: UIProgressView!
@@ -84,8 +86,16 @@ class UIBufferSettingsViewController: UIViewController {
     @IBOutlet var btnExit: UIButton!
     @IBOutlet var lblMemory: UILabel!
     
+    override func viewDidLoad() {
+        let myFrame = CGRectMake(self.view.frame.width / 2 - 100, self.view.frame.height / 2 - 100, 200, 200)
+        myLoadView.frame = myFrame
+        myLoadView.alpha = 0
+        myLoadView.backgroundColor = UIColor.clearColor()
+        self.containerView.addSubview(myLoadView)
+    }
+    
     @IBAction func btnGenerate(sender: AnyObject) {
-        if btnGenerate.titleLabel.text == "Display" {
+        if btnGenerate.titleLabel?.text? == "Display" {
             if !isGIF {
                 self.performSegueWithIdentifier("bufferGenerate", sender: self)
             }
@@ -99,6 +109,10 @@ class UIBufferSettingsViewController: UIViewController {
         isGIF = false
         
         var options =  UIAlertController(title: "Select display method", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        options.addAction(UIAlertAction(title: "Test Something!", style: UIAlertActionStyle.Default, handler: { action in
+            self.runTest()
+        }))
         
         options.addAction(UIAlertAction(title: "Play in App", style: UIAlertActionStyle.Default, handler: { action in
             self.generateForDisplay()
@@ -117,6 +131,48 @@ class UIBufferSettingsViewController: UIViewController {
             })
     }
     
+    func startLoadPulse() {
+        if (!isPulse) {
+            isPulse = true
+            self.loadPulse()
+        }
+    }
+    
+    func endLoadPulse() {
+        isPulse = false
+    }
+    
+    func loadPulse() {
+        UIView.animateWithDuration(1.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn,
+            animations: {() in
+                self.myLoadView.transform = CGAffineTransformScale(self.myLoadView.transform, 0.8, 0.8)
+            },
+            completion: {(Bool) in
+                UIView.animateWithDuration(1.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut,
+                    animations: {() in
+                        self.myLoadView.transform = CGAffineTransformScale(self.myLoadView.transform, 1.25, 1.25)
+                    },
+                    completion: {(Bool) in
+                        if self.isPulse {
+                            self.loadPulse()
+                        }
+                })
+        })
+    }
+    
+    func runTest() {
+        self.myLoadView.transform = CGAffineTransformScale(self.myLoadView.transform, 4, 4)
+        
+        UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {() in
+                self.myLoadView.alpha = 1
+                self.myLoadView.transform = CGAffineTransformScale(self.myLoadView.transform, 1/4, 1/4)
+            },
+            completion: {(Bool) in
+                
+        })
+    }
+    
     func generateForGIF() {
         isGIF = true
         
@@ -126,20 +182,30 @@ class UIBufferSettingsViewController: UIViewController {
     func generateForDisplay() {
         self.toggleButtons(false)
         
-        UIView.animateWithDuration(1, animations: {
-            let curFrame: CGRect = self.containerView.frame
-            let newFrame = CGRectMake(0, 0, curFrame.width, curFrame.height - 17)
-            self.containerView.frame = newFrame
-            self.progressBar.alpha = 1
+        self.myLoadView.transform = CGAffineTransformScale(self.myLoadView.transform, 4, 4)
+        
+        UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {() in
+            // Old generation animation logic
+//            let curFrame: CGRect = self.containerView.frame
+//            let newFrame = CGRectMake(0, 0, curFrame.width, curFrame.height - 17)
+//            self.containerView.frame = newFrame
+//            self.progressBar.alpha = 1
+            
+                self.myLoadView.alpha = 1
+                self.myLoadView.transform = CGAffineTransformScale(self.myLoadView.transform, 1/4, 1/4)
+
+            }, completion: {(Bool) in
+                self.startLoadPulse()
         })
         
-        dispatch_async(dispatch_get_main_queue()) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             self.buildGenerations()
         }
     }
     
     @IBAction func btnExit(sender: AnyObject) {
-        if self.btnExit.titleLabel.text == "Exit" {
+        if self.btnExit.titleLabel?.text? == "Exit" {
             self.dismissViewControllerAnimated(true, completion: {})
         }
         else {
@@ -149,7 +215,7 @@ class UIBufferSettingsViewController: UIViewController {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if segue.identifier == "bufferSettingsEmbeded" {
             self.navController = segue.destinationViewController as UIBufferSettingsTableViewController
         }
@@ -178,16 +244,13 @@ class UIBufferSettingsViewController: UIViewController {
         curState.populateBoard(Double(percent))
         
         gameStates.append(curState.board)
+        self.myLoadView.start()
         
         for i in 0...frames - 1 {
             let changesMade = curState.updateGame()
             
             if navController.toggleAutoBuffer.on && !changesMade {
                 break
-            }
-            
-            if !changesMade {
-                NSLog("No changes made but buffer break didn't fire")
             }
             
             if !isGIF {
@@ -197,26 +260,36 @@ class UIBufferSettingsViewController: UIViewController {
                 gameFrames.append(curState.getBoardImage(self.view.frame.width, width: self.view.frame.width))
             }
             
-            self.progressBar.setProgress(Float(i) / Float(frames), animated: true)
-            
-            NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeInterval: 0.001, sinceDate: NSDate()))
+            // Old generation animation logic
+//            self.progressBar.setProgress(Float(i) / Float(frames), animated: true)
+            self.myLoadView.update(Int(Float(i) / Float(frames) * 100))
         }
         
-        self.progressBar.setProgress(0.0, animated: true)
+        // Old generation animation logic
+//        self.progressBar.setProgress(0.0, animated: true)
         
-        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn,
-            animations: {() in
-                let curFrame: CGRect = self.containerView.frame
-                let newFrame = CGRectMake(0, 0, curFrame.width, curFrame.height + 17)
-                self.containerView.frame = newFrame
-                self.progressBar.alpha = 0
-                self.btnGenerate.setTitle("Display", forState: UIControlState.Normal)
-                self.btnExit.setTitle("Clear", forState: UIControlState.Normal)
-            },
-            completion: {(Bool) in
-                self.toggleButtons(true)
+        dispatch_async(dispatch_get_main_queue(), {
+            self.endLoadPulse()
+            
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut,
+                animations: {() in
+                    // Old generation animation logic
+                    //                let curFrame: CGRect = self.containerView.frame
+                    //                let newFrame = CGRectMake(0, 0, curFrame.width, curFrame.height + 17)
+                    //                self.containerView.frame = newFrame
+                    //                self.progressBar.alpha = 0
+                    self.btnGenerate.setTitle("Display", forState: UIControlState.Normal)
+                    self.btnExit.setTitle("Clear", forState: UIControlState.Normal)
+                    
+                    self.myLoadView.alpha = 0
+                    self.myLoadView.transform = CGAffineTransformScale(self.myLoadView.transform, 1/50, 1/50)
+                },
+                completion: {(Bool) in
+                    self.myLoadView.transform = CGAffineTransformScale(self.myLoadView.transform, 50, 50)
+                    self.toggleButtons(true)
+                    self.myLoadView.stop()
+            })
         })
-        
     }
     
     func toggleButtons(onOff: Bool) {
@@ -225,7 +298,109 @@ class UIBufferSettingsViewController: UIViewController {
     }
 }
 
-class UIBufferGIFViewController: UIViewController, SAVideoRangeSliderDelegate  {
+class UILoadView: UIView {
+    let alphaChange: CGFloat = 0.05
+    var count: NSInteger = 0
+    var stateArray = [[CGFloat]](count: 10, repeatedValue: [CGFloat](count: 10, repeatedValue: 0))
+    var myTimer: NSTimer = NSTimer()
+    
+    override func drawRect(rect: CGRect) {
+        // General Declarations
+        let ctx = UIGraphicsGetCurrentContext()
+        
+        // Shadow Declarations
+        let shadow = UIColor.blackColor().colorWithAlphaComponent(0.7)
+        let shadowOffset = CGSizeMake(0, 0)
+        let shadowBlurRadius: CGFloat = 10
+        
+        // Draw Rectangle
+        let rectanglePath = UIBezierPath(rect: CGRectMake(25, 25, 150, 150))
+        CGContextSaveGState(ctx)
+        CGContextSetShadowWithColor(ctx, shadowOffset, shadowBlurRadius, shadow.CGColor)
+        UIColor.whiteColor().setFill()
+        rectanglePath.fill()
+        CGContextRestoreGState(ctx)
+        
+        // Draw Grid
+        for row in 0...10 {
+            CGContextMoveToPoint(ctx, 25, CGFloat(row) * 15 + 25)
+            CGContextAddLineToPoint(ctx, 175, CGFloat(row) * 15 + 25)
+            CGContextStrokePath(ctx)
+        }
+        
+        for col in 0...10 {
+            CGContextMoveToPoint(ctx, CGFloat(col) * 15 + 25, 25)
+            CGContextAddLineToPoint(ctx, CGFloat(col) * 15 + 25, 175)
+            CGContextStrokePath(ctx)
+        }
+        
+        for x in 0...9 {
+            for y in 0...9 {
+                if stateArray[x][y] <= 0 {
+                    continue
+                }
+                
+                let curX = CGFloat(25 + 15 * x)
+                let curY = CGFloat(25 + 15 * y)
+                
+                CGContextSetFillColorWithColor(ctx, UIColor.blackColor().colorWithAlphaComponent(stateArray[x][y]).CGColor)
+                CGContextFillRect(ctx, CGRectMake(curX, curY, 15, 15))
+            }
+        }
+    }
+    
+    func start() {
+        stateArray = [[CGFloat]](count: 10, repeatedValue: [CGFloat](count: 10, repeatedValue: 0))
+        self.update(1)
+        myTimer = NSTimer(timeInterval: 1 / 30, target: self, selector: "tick", userInfo: nil, repeats: true)
+        NSRunLoop.mainRunLoop().addTimer(myTimer, forMode: NSRunLoopCommonModes)
+    }
+    
+    func stop() {
+        count = 0
+        myTimer.invalidate()
+    }
+    
+    func tick() {
+        for x in 0...9 {
+            for y in 0...9 {
+                if stateArray[x][y] > 0 && stateArray[x][y] < 1 {
+                    stateArray[x][y] += alphaChange
+                }
+            }
+        }
+        
+        self.setNeedsDisplay()
+    }
+    
+    func update(newNum: NSNumber) {
+        if count == newNum {
+            return
+        }
+        
+        count = newNum
+        
+        var possibleSquares = [(Int, Int)]()
+        
+        for x in 0...9 {
+            for y in 0...9 {
+                if stateArray[x][y] == 0 {
+                    possibleSquares.append((x, y))
+                }
+            }
+        }
+        
+        if possibleSquares.count == 0 {
+            return
+        }
+        
+        sort(&possibleSquares) { (_,_) in arc4random() % 2 == 0 }
+        
+        stateArray[possibleSquares[0].0][possibleSquares[0].1] += alphaChange
+    }
+}
+
+class UIBufferGIFViewController: UIViewController, SAVideoRangeSliderDelegate {
     var imageView: UIImageView!
     var frameArr = []
     var curIndex = 0
@@ -254,10 +429,10 @@ class UIBufferGIFViewController: UIViewController, SAVideoRangeSliderDelegate  {
         imageView.stopAnimating()
         
         if leftPosition != lastStart {
-            imageView.image = frameArr[leftPosition] as UIImage
+            imageView.image = frameArr[leftPosition] as? UIImage
         }
         else if rightPosition != lastEnd {
-            imageView.image = frameArr[rightPosition] as UIImage
+            imageView.image = frameArr[rightPosition] as? UIImage
         }
         
         lastStart = leftPosition
@@ -274,17 +449,6 @@ class UIBufferGIFViewController: UIViewController, SAVideoRangeSliderDelegate  {
     
     @IBAction func btnLoadOne(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func makeAnimatedGIF() {
-//        let gifImage = UIImage.animatedImageWithImages(frameArr, duration: 10)
-//        let gifData = UIImagePNGRepresentation(gifImage)
-//        
-//        imageView.image = gifImage
-//        
-////        saveGif()
-//        
-//        imageView.startAnimating()
     }
     
     func saveGif() {
@@ -316,7 +480,7 @@ class UIBufferViewController: UIViewController {
     @IBOutlet var btnStart: UIButton!
     
     @IBAction func btnStartPressed(sender: AnyObject) {
-        if self.btnStart.titleLabel.text == "Start" {
+        if self.btnStart.titleLabel?.text? == "Start" {
             self.btnStart.setTitle("Stop", forState: UIControlState.Normal)
             playbackVC?.startPlayback()
         }
@@ -338,7 +502,7 @@ class UIBufferViewController: UIViewController {
         return true
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if segue.identifier == "bufferPlaybackEmbedded" {
             let destController = segue.destinationViewController as UIBufferPlaybackViewController
             destController.gameStates = gameStates

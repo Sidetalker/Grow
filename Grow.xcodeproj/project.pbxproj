@@ -27,6 +27,7 @@
 		51ACE91619A39BE7009422C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51ACE91419A39BE7009422C0 /* Main.storyboard */; };
 		51ACE91819A39BE7009422C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51ACE91719A39BE7009422C0 /* Images.xcassets */; };
 		51ACE92419A39BE7009422C0 /* GrowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ACE92319A39BE7009422C0 /* GrowTests.swift */; };
+		51C8F42C19B86642000CFB01 /* ConwayGameA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C8F42B19B86642000CFB01 /* ConwayGameA.swift */; };
 		51FD93A719AB93D300B2A00C /* ConwayGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FD93A619AB93D300B2A00C /* ConwayGame.swift */; };
 		51FD93AB19AB9DEB00B2A00C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51FD93AA19AB9DEB00B2A00C /* CoreData.framework */; };
 /* End PBXBuildFile section */
@@ -72,6 +73,7 @@
 		51ACE92219A39BE7009422C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51ACE92319A39BE7009422C0 /* GrowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowTests.swift; sourceTree = "<group>"; };
 		51ACE92D19A3A865009422C0 /* Grow.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Grow.playground; sourceTree = "<group>"; };
+		51C8F42B19B86642000CFB01 /* ConwayGameA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConwayGameA.swift; sourceTree = "<group>"; };
 		51FD93A619AB93D300B2A00C /* ConwayGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConwayGame.swift; sourceTree = "<group>"; };
 		51FD93AA19AB9DEB00B2A00C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -116,16 +118,24 @@
 			path = ../../Libraries/SAVideoRangeSlider/SAVideoRangeSlider;
 			sourceTree = "<group>";
 		};
-		51ACE8FF19A39BE7009422C0 = {
+		517AC67D19B8055F001E5434 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				517AC67019B68FBE001E5434 /* SAVideoRangeSlider */,
 				517AC66E19B66F6B001E5434 /* CoreMedia.framework */,
 				517AC66C19B66F5A001E5434 /* AVFoundation.framework */,
 				517AC66A19B66F54001E5434 /* QuartzCore.framework */,
 				5102DF2A19B0EE95002619BD /* MobileCoreServices.framework */,
 				5102DF2819B0EE91002619BD /* ImageIO.framework */,
 				51FD93AA19AB9DEB00B2A00C /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		51ACE8FF19A39BE7009422C0 = {
+			isa = PBXGroup;
+			children = (
+				517AC67019B68FBE001E5434 /* SAVideoRangeSlider */,
+				517AC67D19B8055F001E5434 /* Frameworks */,
 				51ACE90A19A39BE7009422C0 /* Grow */,
 				51ACE92019A39BE7009422C0 /* GrowTests */,
 				51ACE90919A39BE7009422C0 /* Products */,
@@ -152,6 +162,7 @@
 				516F03C219AE110800202CAA /* SideMenu.xib */,
 				5110A2A619A7951700CDF0F8 /* MainView.swift */,
 				51FD93A619AB93D300B2A00C /* ConwayGame.swift */,
+				51C8F42B19B86642000CFB01 /* ConwayGameA.swift */,
 				51ACE92D19A3A865009422C0 /* Grow.playground */,
 				51ACE91419A39BE7009422C0 /* Main.storyboard */,
 				51ACE91719A39BE7009422C0 /* Images.xcassets */,
@@ -296,6 +307,7 @@
 				516F03BF19ADFFA600202CAA /* SideMenu.swift in Sources */,
 				517AC67B19B68FBE001E5434 /* SASliderRight.m in Sources */,
 				51FD93A719AB93D300B2A00C /* ConwayGame.swift in Sources */,
+				51C8F42C19B86642000CFB01 /* ConwayGameA.swift in Sources */,
 				51ACE90E19A39BE7009422C0 /* AppDelegate.swift in Sources */,
 				515F91AA19ACE4FF005151E2 /* BufferGame.swift in Sources */,
 				517AC67919B68FBE001E5434 /* SAResizibleBubble.m in Sources */,

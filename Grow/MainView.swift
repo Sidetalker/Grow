@@ -84,11 +84,11 @@ class MainView: UIView, ConwayGameDelegate {
     }
     
     func startStopTapped() {
-        if btnStartStop.titleLabel.text == "Start" {
+        if btnStartStop.titleLabel?.text? == "Start" {
             gameBoard.startGame()
             btnStartStop.setTitle("Stop", forState: UIControlState.Normal)
         }
-        else if btnStartStop.titleLabel.text == "Stop" {
+        else if btnStartStop.titleLabel?.text? == "Stop" {
             gameBoard.stopGame()
             btnStartStop.setTitle("Start", forState: UIControlState.Normal)
         }

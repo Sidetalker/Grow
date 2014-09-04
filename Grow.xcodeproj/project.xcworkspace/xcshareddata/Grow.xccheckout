@@ -20,7 +20,7 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>257CCCD5A6440AFA8B7E4B8541F77029CDCCA47F</key>
-		<string>../../../../Libraries/SAVideoRangeSlider</string>
+		<string>../../../Libraries/SAVideoRangeSlider</string>
 		<key>584E8422F4936A68B4E74F04FC70000AAB9CFAAA</key>
 		<string>../..</string>
 	</dict>
