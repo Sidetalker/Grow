@@ -28,7 +28,6 @@ class UIBufferSettingsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         let scrollView: UIScrollView = self.view as UIScrollView
-        NSLog("delaysContentTouches: \(scrollView.delaysContentTouches)")
     }
     
     @IBAction func toggleAutoBuffer(sender: AnyObject) {
@@ -36,8 +35,7 @@ class UIBufferSettingsTableViewController: UITableViewController {
             lblBufferFrames.text = "Buffer Frames: Auto"
             stepperBufferFrames.enabled = false
         }
-        else
-        {
+        else {
             lblBufferFrames.text = "Buffer Frames: \(bufferFrames)"
             stepperBufferFrames.enabled = true
         }
@@ -47,40 +45,30 @@ class UIBufferSettingsTableViewController: UITableViewController {
         let stepper = sender as UIStepper
         rows = Int(stepper.value)
         lblRows.text = "Rows: \(Int(stepper.value))"
-        
-        NSLog("stepRows fired")
     }
     
     @IBAction func stepColumns(sender: AnyObject) {
         let stepper = sender as UIStepper
         columns = Int(stepper.value)
         lblColumns.text = "Columns: \(Int(stepper.value))"
-        
-        NSLog("stepColumns fired")
     }
     
     @IBAction func stepPercent(sender: AnyObject) {
         let stepper = sender as UIStepper
         percent = Int(stepper.value)
         lblPercent.text = "Percentage Fill: \(Int(stepper.value))%"
-        
-        NSLog("stepPercent fired")
     }
     
     @IBAction func stepBufferFrames(sender: AnyObject) {
         let stepper = sender as UIStepper
         bufferFrames = Int(stepper.value)
         lblBufferFrames.text = "Buffer Frames: \(Int(stepper.value))"
-        
-        NSLog("stepBufferFrames fired")
     }
     
     @IBAction func stepFramerate(sender: AnyObject) {
         let stepper = sender as UIStepper
         framerate = Int(stepper.value)
         lblFramerate.text = "Framerate: \(Int(stepper.value)) FPS"
-        
-        NSLog("stepFramerate fired")
     }
 }
 
@@ -97,8 +85,6 @@ class UIBufferSettingsViewController: UIViewController {
     @IBOutlet var lblMemory: UILabel!
     
     @IBAction func btnGenerate(sender: AnyObject) {
-        NSLog("btnGenerate fired")
-        
         if btnGenerate.titleLabel.text == "Display" {
             if !isGIF {
                 self.performSegueWithIdentifier("bufferGenerate", sender: self)
@@ -193,7 +179,7 @@ class UIBufferSettingsViewController: UIViewController {
         
         gameStates.append(curState.board)
         
-        for i in 0...frames - 2 {
+        for i in 0...frames - 1 {
             let changesMade = curState.updateGame()
             
             if navController.toggleAutoBuffer.on && !changesMade {
@@ -208,7 +194,7 @@ class UIBufferSettingsViewController: UIViewController {
                 gameStates.append(curState.board)
             }
             else {
-                gameFrames.append(curState.getBoardImage(200, width: 200))
+                gameFrames.append(curState.getBoardImage(self.view.frame.width, width: self.view.frame.width))
             }
             
             self.progressBar.setProgress(Float(i) / Float(frames), animated: true)
@@ -239,45 +225,66 @@ class UIBufferSettingsViewController: UIViewController {
     }
 }
 
-class UIBufferGIFViewController: UIViewController  {
-    @IBOutlet var imageView: UIImageView!
-    
+class UIBufferGIFViewController: UIViewController, SAVideoRangeSliderDelegate  {
+    var imageView: UIImageView!
     var frameArr = []
-    var playbackTimer = NSTimer()
     var curIndex = 0
+    var isAnimating = false
+    var lastStart = 0
+    var lastEnd = 0
     
     override func viewDidLoad() {
+        imageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.width))
+        let rangeSlider = SAVideoRangeSlider(frame: CGRectMake(10, self.view.frame.size.width + 10, self.view.frame.size.width - 20, 25), gifArray: frameArr)
+        rangeSlider.delegate = self
+        
+        self.view.addSubview(imageView)
+        self.view.addSubview(rangeSlider)
+        
+        imageView.image = UIImage.animatedImageWithImages(frameArr, duration: 10)
+        imageView.startAnimating()
+        isAnimating = true
     }
     
-    override func viewDidAppear(animated: Bool) {
-        let rangeSlider = SAVideoRangeSlider(frame: CGRectMake(10, 200, self.view.frame.size.width - 20, 70), gifArray: frameArr)
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    func videoRange(videoRange: SAVideoRangeSlider!, didChangeLeftPosition leftPosition: Int, rightPosition: Int) {
+        imageView.stopAnimating()
         
-        self.view.addSubview(rangeSlider)
+        if leftPosition != lastStart {
+            imageView.image = frameArr[leftPosition] as UIImage
+        }
+        else if rightPosition != lastEnd {
+            imageView.image = frameArr[rightPosition] as UIImage
+        }
+        
+        lastStart = leftPosition
+        lastEnd = rightPosition
+    }
+    
+    func videoRange(videoRange: SAVideoRangeSlider!, didGestureStateEndedLeftPosition leftPosition: Int, rightPosition: Int) {
+        imageView.image = UIImage.animatedImageWithImages(frameArr.subarrayWithRange(NSMakeRange(leftPosition, rightPosition - 1 - leftPosition)), duration: 10)
+        
+        if isAnimating {
+            imageView.startAnimating()
+        }
     }
     
     @IBAction func btnLoadOne(sender: AnyObject) {
-//        playbackTimer = NSTimer.scheduledTimerWithTimeInterval(1 / 10, target: self, selector: "tick", userInfo: nil, repeats: true)
-        self.makeAnimatedGIF()
-    }
-    
-    func tick() {
-        if curIndex == frameArr.count {
-            curIndex = 0
-        }
-        
-        imageView.image = frameArr[curIndex] as UIImage
-        curIndex++
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func makeAnimatedGIF() {
-        let gifImage = UIImage.animatedImageWithImages(frameArr, duration: 10)
-        let gifData = UIImagePNGRepresentation(gifImage)
-        
-        imageView.image = gifImage
-        
-        saveGif()
-        
-        imageView.startAnimating()
+//        let gifImage = UIImage.animatedImageWithImages(frameArr, duration: 10)
+//        let gifData = UIImagePNGRepresentation(gifImage)
+//        
+//        imageView.image = gifImage
+//        
+////        saveGif()
+//        
+//        imageView.startAnimating()
     }
     
     func saveGif() {
